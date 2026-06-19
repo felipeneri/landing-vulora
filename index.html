@@ -2,28 +2,57 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>html.pre-i18n body{visibility:hidden}</style>
+    <script>document.documentElement.classList.add('pre-i18n')</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
     <title data-i18n-meta="meta.title">Vulora — Private Financial Intelligence</title>
     <meta name="description" content="A private, AI-native financial experience designed to turn your money into a conversation." data-i18n-meta="meta.description">
+    <meta name="author" content="Vulora">
+    <meta name="robots" content="index, follow">
+
     <meta property="og:title" content="Vulora — Private Financial Intelligence" data-i18n-meta="meta.ogTitle">
     <meta property="og:description" content="A private, AI-native financial experience designed to turn your money into a conversation." data-i18n-meta="meta.ogDescription">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vulora.com.br/">
-    <meta property="og:image" content="/assets/logo.png">
+    <meta property="og:image" content="https://vulora.com.br/assets/logo.png">
+    <meta property="og:site_name" content="Vulora">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="pt_BR">
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vulora — Private Financial Intelligence" data-i18n-meta="meta.twitterTitle">
     <meta name="twitter:description" content="A private, AI-native financial experience designed to turn your money into a conversation." data-i18n-meta="meta.twitterDescription">
-    <link rel="icon" href="assets/favicon.png">
+    <meta name="twitter:image" content="https://vulora.com.br/assets/logo.png">
+
+    <link rel="icon" href="assets/favicon.png" sizes="any">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/favicon/favicon-16x16.png" sizes="16x16">
     <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Vulora",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "iOS",
+      "description": "A private, AI-native financial experience designed to turn your money into a conversation.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
   </head>
   <body data-page="home">
     <header class="site-header site-header--float" aria-label="Primary navigation">
       <a class="brand" href="index.html" aria-label="Vulora home">
-        <img src="assets/logo.png" alt="" width="32" height="32">
+        <img src="assets/logo.png" alt="" width="30" height="30">
         <span>Vulora</span>
       </a>
       <nav class="nav-links" aria-label="Main">
@@ -35,8 +64,8 @@
       </nav>
       <div class="header-actions">
         <select class="language-select" data-language-select aria-label="Language selector">
-          <option value="pt-BR">🇧🇷 PT</option>
-          <option value="en">🇺🇸 EN</option>
+          <option value="pt-BR">🇧🇷 Português</option>
+          <option value="en">🇺🇸 English</option>
         </select>
         <a class="button button-primary" href="#waitlist" data-i18n="nav.waitlist">Join waitlist</a>
       </div>
@@ -47,20 +76,21 @@
         <section class="hero" id="top">
           <div class="hero-bg" aria-hidden="true">
             <canvas class="hero-three" data-hero-three></canvas>
+            <div class="hero-mist"></div>
             <div class="hero-material"></div>
           </div>
           <div class="hero-glow" aria-hidden="true"></div>
           <div class="container hero-grid">
-            <div class="hero-copy reveal">
+            <div class="hero-copy reveal" data-parallax="0.04">
               <p class="badge" data-i18n="hero.badge">Private AI · Local-first · Finance</p>
               <h1 data-i18n="hero.title">Private financial intelligence.</h1>
               <p class="hero-subtitle" data-i18n="hero.subtitle">Vulora turns your financial life into a private conversation — intelligent, contextual and designed to feel alive.</p>
               <div class="cta-row">
-                <a class="button button-primary" href="#waitlist" data-i18n="hero.primaryCta">Join the private beta</a>
-                <button class="button button-secondary" type="button" data-demo-button data-i18n="hero.secondaryCta">Watch demo</button>
+                <a class="button button-primary" href="#waitlist" data-magnetic data-i18n="hero.primaryCta">Join the private beta</a>
+                <button class="button button-secondary" type="button" data-demo-button data-magnetic data-i18n="hero.secondaryCta">Watch demo</button>
               </div>
             </div>
-            <div class="phone-stage reveal">
+            <div class="phone-stage reveal" data-parallax="-0.05">
               <div class="device-mockup" aria-label="Vulora app preview">
                 <div class="device-mockup__screen">
                   <video
@@ -184,10 +214,10 @@
             <p class="section-copy" data-i18n="beta.subtitle">We're preparing the first private beta of Vulora.</p>
           </div>
           <div class="container countdown reveal" aria-label="Launch countdown">
-            <div><strong data-countdown="days">00</strong><span data-i18n="countdown.days">Days</span></div>
-            <div><strong data-countdown="hours">00</strong><span data-i18n="countdown.hours">Hours</span></div>
-            <div><strong data-countdown="minutes">00</strong><span data-i18n="countdown.minutes">Minutes</span></div>
-            <div><strong data-countdown="seconds">00</strong><span data-i18n="countdown.seconds">Seconds</span></div>
+            <div class="countdown-cell"><strong data-countdown="days">00</strong><span data-i18n="countdown.days">Days</span></div>
+            <div class="countdown-cell"><strong data-countdown="hours">00</strong><span data-i18n="countdown.hours">Hours</span></div>
+            <div class="countdown-cell"><strong data-countdown="minutes">00</strong><span data-i18n="countdown.minutes">Minutes</span></div>
+            <div class="countdown-cell"><strong data-countdown="seconds">00</strong><span data-i18n="countdown.seconds">Seconds</span></div>
           </div>
           <div class="container" id="waitlist">
             <form class="lead-form glass-card reveal" novalidate data-lead-form>
@@ -196,11 +226,11 @@
                 <p data-i18n="form.subtitle">Early access invitations will be sent privately.</p>
               </div>
               <div class="form-grid">
-                <label>
+                <label class="field">
                   <span data-i18n="form.name">Name (optional)</span>
                   <input type="text" name="name" autocomplete="name" data-i18n-attr="placeholder:form.namePlaceholder" placeholder="Your name">
                 </label>
-                <label>
+                <label class="field">
                   <span data-i18n="form.email">Email</span>
                   <input type="email" name="email" autocomplete="email" required data-i18n-attr="placeholder:form.emailPlaceholder" placeholder="you@example.com">
                 </label>
@@ -253,7 +283,7 @@
         <div class="container footer-grid">
           <div>
             <a class="brand" href="index.html" aria-label="Vulora home">
-              <img src="assets/logo.png" alt="" width="32" height="32">
+              <img src="assets/logo.png" alt="" width="30" height="30">
               <span>Vulora</span>
             </a>
             <p data-i18n="footer.tagline">Private financial intelligence, designed with restraint.</p>

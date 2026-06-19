@@ -7,16 +7,18 @@ const SHOWCASE_SLIDES = [
     altKey: "showcase.slides.overview.alt",
     captionKey: "showcase.slides.overview.caption"
   }
-  // Adicione novos prints aqui conforme forem disponíveis
 ];
 
 let refreshShowcaseCarousel = null;
+
+/* ----------------------------------------------------------- device mockup */
 
 const MOCKUP_FRAME = "assets/mockup.png";
 
 function createDeviceMockup(appSrc, alt, loading = "lazy") {
   const mockup = document.createElement("div");
   mockup.className = "device-mockup";
+  mockup.setAttribute("aria-label", alt);
 
   const screen = document.createElement("div");
   screen.className = "device-mockup__screen";
@@ -45,6 +47,8 @@ function createDeviceMockup(appSrc, alt, loading = "lazy") {
   return mockup;
 }
 
+/* ----------------------------------------------------------- translations */
+
 const translations = {
   en: {
     meta: {
@@ -72,7 +76,8 @@ const translations = {
     mockup: {
       user: "Can I spend less this month?",
       ai: "Yes. Subscriptions rose 18%. I found three quiet savings.",
-      metric: "Private insight"
+      metric: "Private insight",
+      metricValue: "−18% subscriptions"
     },
     showcase: {
       eyebrow: "Inside the app",
@@ -121,6 +126,8 @@ const translations = {
       submit: "Request access",
       loading: "Sending request…",
       success: "You're on the list. We'll be in touch privately.",
+      successTitle: "You're on the list",
+      successSubtitle: "We'll be in touch privately when the beta opens.",
       invalidEmail: "Enter a valid email address.",
       consentRequired: "Consent is required to join the waitlist.",
       error: "Something went wrong. Please try again."
@@ -214,7 +221,8 @@ const translations = {
     mockup: {
       user: "Posso gastar menos este mês?",
       ai: "Sim. Assinaturas subiram 18%. Encontrei três economias discretas.",
-      metric: "Insight privado"
+      metric: "Insight privado",
+      metricValue: "−18% assinaturas"
     },
     showcase: {
       eyebrow: "Dentro do app",
@@ -263,6 +271,8 @@ const translations = {
       submit: "Solicitar acesso",
       loading: "Enviando solicitação…",
       success: "Você está na lista. Entraremos em contato de forma privada.",
+      successTitle: "Você está na lista",
+      successSubtitle: "Entraremos em contato de forma privada quando o beta abrir.",
       invalidEmail: "Informe um e-mail válido.",
       consentRequired: "O consentimento é obrigatório para entrar na lista.",
       error: "Algo deu errado. Tente novamente."
@@ -352,7 +362,7 @@ function getCurrentLanguage() {
 function applyLanguage(lang) {
   currentLanguage = translations[lang] ? lang : "en";
   localStorage.setItem("vulora_language", currentLanguage);
-  document.documentElement.lang = currentLanguage;
+  document.documentElement.lang = currentLanguage === "pt-BR" ? "pt-BR" : "en";
 
   document.querySelectorAll("[data-language-select]").forEach((select) => {
     select.value = currentLanguage;
@@ -389,7 +399,10 @@ function initLanguage() {
     select.addEventListener("change", (event) => applyLanguage(event.target.value));
   });
   applyLanguage(currentLanguage);
+  document.documentElement.classList.remove("pre-i18n");
 }
+
+/* ----------------------------------------------------------- reveal */
 
 function initReveal() {
   const elements = document.querySelectorAll(".reveal");
@@ -399,30 +412,47 @@ function initReveal() {
     return;
   }
 
-  const staggerGroups = document.querySelectorAll(".card-grid .reveal, .privacy-list .reveal, .faq-list .reveal, .countdown .reveal");
-  const staggerSet = new Set(staggerGroups);
+  // Immediately mark elements already in the viewport as visible —
+  // prevents the "second render" flash on page load (above-the-fold content
+  // appears instantly instead of fading in after the body is revealed)
+  const vh = window.innerHeight;
+  elements.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < vh && rect.bottom > 0) {
+      el.classList.add("visible");
+    }
+  });
+
+  // Only observe elements still hidden (below the fold) for scroll animation
+  const hidden = document.querySelectorAll(".reveal:not(.visible)");
+  if (!hidden.length) return;
+
+  const staggerSet = new Set(
+    document.querySelectorAll(".card-grid .reveal, .privacy-list .reveal, .faq-list .reveal, .countdown .reveal")
+  );
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       const el = entry.target;
-      const parent = el.parentElement;
-      const siblings = Array.from(parent.querySelectorAll(".reveal"));
+      const siblings = Array.from(el.parentElement.querySelectorAll(".reveal"));
       const index = siblings.indexOf(el);
       if (staggerSet.has(el) && index > 0) {
         setTimeout(() => {
           el.classList.add("visible");
           observer.unobserve(el);
-        }, index * 100);
+        }, index * 110);
       } else {
         el.classList.add("visible");
         observer.unobserve(el);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
 
-  elements.forEach((element) => observer.observe(element));
+  hidden.forEach((element) => observer.observe(element));
 }
+
+/* ----------------------------------------------------------- countdown */
 
 function initCountdown() {
   const nodes = {
@@ -451,6 +481,55 @@ function initCountdown() {
   setInterval(update, 1000);
 }
 
+/* ----------------------------------------------------------- parallax */
+
+function initParallax() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const targets = document.querySelectorAll("[data-parallax]");
+  if (!targets.length) return;
+
+  let ticking = false;
+  const update = () => {
+    const y = window.scrollY;
+    targets.forEach((el) => {
+      const strength = parseFloat(el.dataset.parallax) || 0;
+      el.style.transform = `translate3d(0, ${y * strength}px, 0)`;
+    });
+    ticking = false;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+/* ----------------------------------------------------------- magnetic buttons */
+
+function initMagnetic() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const buttons = document.querySelectorAll("[data-magnetic]");
+  if (!buttons.length) return;
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+
+  buttons.forEach((btn) => {
+    const strength = 14;
+    btn.addEventListener("pointermove", (event) => {
+      const rect = btn.getBoundingClientRect();
+      const x = event.clientX - (rect.left + rect.width / 2);
+      const y = event.clientY - (rect.top + rect.height / 2);
+      btn.style.transform = `translate(${(x / rect.width) * strength}px, ${(y / rect.height) * strength - 1}px)`;
+    });
+    btn.addEventListener("pointerleave", () => {
+      btn.style.transform = "";
+    });
+  });
+}
+
+/* ----------------------------------------------------------- lead form */
+
 function getUtmPayload() {
   const params = new URLSearchParams(window.location.search);
   return {
@@ -466,17 +545,41 @@ function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
+function setFieldState(input, state) {
+  const field = input.closest(".field");
+  if (!field) return;
+  field.classList.remove("is-invalid", "is-valid");
+  if (state) field.classList.add(`is-${state}`);
+}
+
+function showStatus(status, message, type = "") {
+  status.textContent = message;
+  status.classList.remove("error", "success");
+  status.classList.remove("is-visible");
+  if (type) status.classList.add(type);
+  requestAnimationFrame(() => status.classList.add("is-visible"));
+}
+
 function initLeadForm() {
   const form = document.querySelector("[data-lead-form]");
   if (!form) return;
 
   const status = form.querySelector("[data-form-status]");
   const button = form.querySelector('button[type="submit"]');
+  const emailInput = form.querySelector('input[name="email"]');
+  const consentInput = form.querySelector('input[name="consent"]');
+
+  emailInput?.addEventListener("input", () => {
+    if (emailInput.value.trim() && isValidEmail(emailInput.value.trim())) {
+      setFieldState(emailInput, "valid");
+    } else {
+      setFieldState(emailInput, null);
+    }
+  });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    status.classList.remove("error");
-    status.textContent = "";
+    status.classList.remove("is-visible", "error", "success");
 
     const formData = new FormData(form);
     if (formData.get("website")) return;
@@ -485,14 +588,16 @@ function initLeadForm() {
     const consent = formData.get("consent") === "on";
 
     if (!isValidEmail(email)) {
-      status.textContent = getTranslation("form.invalidEmail");
-      status.classList.add("error");
+      setFieldState(emailInput, "invalid");
+      showStatus(status, getTranslation("form.invalidEmail"), "error");
+      emailInput?.focus();
       return;
     }
+    setFieldState(emailInput, "valid");
 
     if (!consent) {
-      status.textContent = getTranslation("form.consentRequired");
-      status.classList.add("error");
+      showStatus(status, getTranslation("form.consentRequired"), "error");
+      consentInput?.focus();
       return;
     }
 
@@ -500,12 +605,14 @@ function initLeadForm() {
       name: String(formData.get("name") || "").trim(),
       email,
       consent: true,
+      language: getCurrentLanguage(),
       source: "vulora-landing",
       ...getUtmPayload(),
       created_at: new Date().toISOString()
     };
 
     button.disabled = true;
+    button.classList.add("is-loading");
     button.textContent = getTranslation("form.loading");
 
     try {
@@ -518,20 +625,34 @@ function initLeadForm() {
         if (!response.ok) throw new Error(`Lead endpoint failed: ${response.status}`);
       } else {
         console.info("Vulora lead payload", payload);
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        await new Promise((resolve) => setTimeout(resolve, 700));
       }
       form.reset();
-      status.textContent = getTranslation("form.success");
+      setFieldState(emailInput, null);
+      form.setAttribute("data-state", "success");
+      const heading = form.querySelector(".form-heading");
+      if (heading) {
+        heading.innerHTML = "";
+        const title = document.createElement("h3");
+        title.textContent = getTranslation("form.successTitle");
+        const sub = document.createElement("p");
+        sub.textContent = getTranslation("form.successSubtitle");
+        heading.appendChild(title);
+        heading.appendChild(sub);
+      }
+      showStatus(status, getTranslation("form.success"), "success");
     } catch (error) {
       console.error(error);
-      status.textContent = getTranslation("form.error");
-      status.classList.add("error");
+      showStatus(status, getTranslation("form.error"), "error");
     } finally {
       button.disabled = false;
+      button.classList.remove("is-loading");
       button.textContent = getTranslation("form.submit");
     }
   });
 }
+
+/* ----------------------------------------------------------- cookies */
 
 function enableAnalytics() {
   console.info("Analytics enabled placeholder. Add provider code here.");
@@ -577,12 +698,14 @@ function initCookies() {
   });
 }
 
+/* ----------------------------------------------------------- misc */
+
 function initDemoButton() {
   const button = document.querySelector("[data-demo-button]");
   if (!button) return;
 
   button.addEventListener("click", () => {
-    const target = document.querySelector("#showcase") || document.querySelector(".device-mockup");
+    const target = document.querySelector("#showcase") || document.querySelector(".device");
     target?.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 }
@@ -712,13 +835,27 @@ function initHeaderScrolled() {
   }, { passive: true });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initLanguage();
-  initReveal();
-  initCountdown();
-  initLeadForm();
-  initCookies();
-  initDemoButton();
-  initShowcaseCarousel();
-  initHeaderScrolled();
+// Script is at end of <body> — all DOM is available right now.
+// Run everything synchronously BEFORE the browser paints, so the user
+// never sees untranslated text or un-revealed content. This mimics
+// the instant feel of server-side rendered pages.
+initLanguage();
+initReveal();
+initCountdown();
+initParallax();
+initMagnetic();
+initLeadForm();
+initCookies();
+initDemoButton();
+initShowcaseCarousel();
+initHeaderScrolled();
+
+// Enable scroll-reveal transitions only after the first paint is committed.
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    document.documentElement.classList.add("motion-ready");
+  });
 });
+
+// safety fallback — reveal page even if something above throws
+setTimeout(() => document.documentElement.classList.remove("pre-i18n"), 400);
