@@ -1,6 +1,3 @@
-const LAUNCH_DATE = "2026-08-01T09:00:00-03:00";
-const LEADS_ENDPOINT = "";
-
 const SHOWCASE_SLIDES = [
   {
     src: "assets/app-vulora.webp",
@@ -10,6 +7,47 @@ const SHOWCASE_SLIDES = [
 ];
 
 let refreshShowcaseCarousel = null;
+
+// Paste a YouTube video ID or any YouTube URL (watch, youtu.be, embed, shorts).
+const YOUTUBE_PRESENTATION_ID = "Uz_iZ5OhZ6s";
+
+function parseYouTubeId(input) {
+  if (!input) return "";
+  const value = String(input).trim();
+
+  if (/^[\w-]{11}$/.test(value)) return value;
+
+  try {
+    const url = new URL(value);
+    if (url.hostname === "youtu.be") return url.pathname.slice(1).split("/")[0];
+    const fromQuery = url.searchParams.get("v");
+    if (fromQuery) return fromQuery;
+
+    const fromPath = url.pathname.match(/\/(?:embed|shorts|live)\/([\w-]{11})/);
+    if (fromPath) return fromPath[1];
+  } catch {
+    const fromString = value.match(/(?:v=|\/embed\/|youtu\.be\/|\/shorts\/)([\w-]{11})/);
+    if (fromString) return fromString[1];
+  }
+
+  return "";
+}
+
+function buildYouTubeEmbedUrl(videoId) {
+  const params = new URLSearchParams({
+    autoplay: "1",
+    rel: "0",
+    modestbranding: "1",
+    playsinline: "1",
+    enablejsapi: "1"
+  });
+
+  if (window.location.origin && window.location.origin !== "null") {
+    params.set("origin", window.location.origin);
+  }
+
+  return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+}
 
 /* ----------------------------------------------------------- device mockup */
 
@@ -52,26 +90,21 @@ function createDeviceMockup(appSrc, alt, loading = "lazy") {
 const translations = {
   en: {
     meta: {
-      title: "Vulora — Private Financial Intelligence",
-      description: "A private, AI-native financial experience designed to turn your money into a conversation.",
-      ogTitle: "Vulora — Private Financial Intelligence",
-      ogDescription: "A private, AI-native financial experience designed to turn your money into a conversation.",
-      twitterTitle: "Vulora — Private Financial Intelligence",
-      twitterDescription: "A private, AI-native financial experience designed to turn your money into a conversation.",
-      privacyTitle: "Privacy Policy — Vulora",
-      privacyDescription: "Vulora landing page privacy policy.",
-      cookiesTitle: "Cookie Policy — Vulora",
-      cookiesDescription: "Vulora cookie policy.",
-      termsTitle: "Terms of Use — Vulora",
-      termsDescription: "Vulora terms of use."
+      title: "Vulora — On-device AI, an engineering case study",
+      description: "Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter.",
+      ogTitle: "Vulora — On-device AI, an engineering case study",
+      ogDescription: "Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter.",
+      twitterTitle: "Vulora — On-device AI, an engineering case study",
+      twitterDescription: "Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter."
     },
-    nav: { product: "Product", showcase: "App", privacy: "Privacy", beta: "Beta", faq: "FAQ", waitlist: "Join waitlist" },
+    nav: { thesis: "Thesis", showcase: "App", engineering: "Engineering", privacy: "Privacy", faq: "FAQ", contact: "Get in touch" },
     hero: {
-      badge: "Private AI · Local-first · Finance",
-      title: "Private financial intelligence.",
-      subtitle: "Vulora turns your financial life into a private conversation — intelligent, contextual and designed to feel alive.",
-      primaryCta: "Join the private beta",
-      secondaryCta: "Watch demo"
+      badge: "Engineering case study · Local-first AI · Flutter",
+      title: "Financial intelligence you control.",
+      subtitle: "A proof of concept with on-device inference by default — or routed to trusted providers on your LAN or private cloud. Offline-first, contextual AI that never hands your data to third-party clouds.",
+      primaryCta: "Explore the build",
+      secondaryCta: "Watch demo",
+      videoLabel: "Watch presentation video"
     },
     mockup: {
       user: "Can I spend less this month?",
@@ -80,74 +113,70 @@ const translations = {
       metricValue: "−18% subscriptions"
     },
     showcase: {
-      eyebrow: "Inside the app",
-      title: "Quiet intelligence, in your pocket.",
-      subtitle: "A dark, liquid-glass interface designed to keep your financial life private — conversational, contextual and unmistakably yours.",
+      eyebrow: "Inside the POC",
+      title: "A generative UI, rendered on-device.",
+      subtitle: "A dark, liquid-glass interface where the model composes ephemeral components in real time — conversational, contextual and free of third-party clouds.",
       slides: {
         overview: {
           alt: "Vulora app home screen",
-          caption: "Your financial life, in conversation."
+          caption: "Generative UI, composed on-device."
         }
       }
     },
-    conversation: {
-      eyebrow: "The product",
-      title: "Not a dashboard. A conversation.",
+    thesis: {
+      eyebrow: "The premise",
+      title: "Sending sensitive financial data to third-party clouds shouldn't be the industry default.",
+      subtitle: "Vulora is the technical answer to that premise: a local-first intelligence layer — on-device, on your LAN, or on a private endpoint you trust — that keeps context and data with you and treats third-party clouds as optional, not mandatory.",
       cards: {
-        ask: { title: "Ask naturally", text: "Talk to your money like you would talk to a trusted analyst." },
-        spend: { title: "Understand your spending", text: "See context, patterns and signals without staring at charts." },
-        private: { title: "Keep data private", text: "Built around the belief that sensitive financial data deserves restraint." }
+        local: { title: "Local by default", text: "Inference runs where you choose — on the device, your home network, or a trusted private endpoint — without routing your money through public APIs." },
+        offline: { title: "Offline-first architecture", text: "Context and history live with you. The app stays useful with or without a network." },
+        sovereign: { title: "Data sovereignty", text: "Privacy as an architectural decision, not a checkbox — sensitive data never has to leave the device." }
+      }
+    },
+    engineering: {
+      eyebrow: "Under the hood",
+      title: "The engineering behind the proof of concept.",
+      subtitle: "The hard part isn't the idea — it's making a local LLM fast, safe and reliable on mobile hardware. These are the problems this project solves.",
+      cards: {
+        llm: { tag: "Gemma 4 E2B · GPU", title: "On-device inference path", text: "A ~2.6 GB Gemma 4 E2B model runs locally on the GPU via flutter_gemma — opt-in download, with image input disabled to stay clear of OOM. The same harness also routes to trusted providers on your LAN or private cloud." },
+        tools: { tag: "21 tools · Function calling", title: "An agentic tool layer", text: "21 typed tools dispatched to deterministic Dart handlers — expenses, budgets, finance queries and memory — all driven by function calling." },
+        guardrails: { tag: "Confirmations · Privacy", title: "Guardrails by design", text: "Destructive actions wait for an explicit confirmation card; private memories never go back to the model and sensitive categories are refused outright." },
+        genui: { tag: "App-owned visuals", title: "Deterministic generative UI", text: "Tools return typed visual payloads — budget and confirmation cards — rendered natively inside the chat. No model-authored JSON drives the screen." },
+        streaming: { tag: "Streaming · Context", title: "Streaming under control", text: "Real-time token streaming with reasoning traces, a mutex serializing native FFI calls, token-buffer pruning and a live context cost." },
+        storage: { tag: "Drift · Hive", title: "Offline-first persistence", text: "A relational SQLite layer (Drift, 9 tables, enforced foreign keys, money in cents) plus fast Hive key-value — all data stays in the app, on the device." },
       }
     },
     privacy: {
       eyebrow: "Private by design",
-      title: "Financial intelligence should feel close, not exposed.",
-      text: "Vulora is being designed to reduce cloud dependency, keep context near you and make personal finance feel fast, quiet and trustworthy.",
+      title: "Privacy is an architecture decision, not a feature.",
+      text: "Vulora is built to minimize cloud dependency, keep context on the device and make personal finance feel fast, quiet and trustworthy — privacy designed into the system, not bolted on.",
       cards: {
         sensitive: { title: "Sensitive by nature", text: "Money data deserves clear boundaries and careful handling." },
-        cloud: { title: "Less cloud reliance", text: "The vision is local-first intelligence with the cloud used intentionally." },
+        cloud: { title: "Less cloud reliance", text: "Local-first intelligence, with the cloud used only when it's genuinely the right tool." },
         offline: { title: "Fast and contextual", text: "Designed for an offline-first experience that understands your context." }
       }
     },
-    beta: {
-      eyebrow: "Private beta",
-      title: "Something private is coming.",
-      subtitle: "We're preparing the first private beta of Vulora."
-    },
-    countdown: { days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds" },
-    form: {
-      title: "Join the waitlist",
-      subtitle: "Early access invitations will be sent privately.",
-      name: "Name (optional)",
-      namePlaceholder: "Your name",
-      email: "Email",
-      emailPlaceholder: "you@example.com",
-      consent: "I agree to receive updates about Vulora and understand I can unsubscribe at any time.",
-      submit: "Request access",
-      loading: "Sending request…",
-      success: "You're on the list. We'll be in touch privately.",
-      successTitle: "You're on the list",
-      successSubtitle: "We'll be in touch privately when the beta opens.",
-      invalidEmail: "Enter a valid email address.",
-      consentRequired: "Consent is required to join the waitlist.",
-      error: "Something went wrong. Please try again."
+    contact: {
+      eyebrow: "The engineer",
+      title: "A proof of concept, built in the open mind.",
+      text: "Vulora started as a personal itch — a real problem I wanted to solve well — and became a deep dive into edge AI: a custom harness with guardrails and tooling, a private benchmark to choose a base model for fine-tuning, and a local-first architecture with pluggable inference — on-device, LAN, or private cloud. No launch, no pitch. Just the engineering, in public view.",
+      note: "If you work on mobile architecture, applied AI or edge inference, let's have a chat.",
+      site: "Personal site",
+      x: "Profile on X"
     },
     faq: {
       eyebrow: "FAQ",
-      title: "Clear answers, quiet promises.",
+      title: "Clear answers, no hype.",
       items: {
-        what: { q: "What is Vulora?", a: "Vulora is a personal financial intelligence project designed to make your financial life conversational, contextual and private." },
-        bank: { q: "Is Vulora a bank?", a: "No. Vulora is not a bank, financial institution, broker or investment adviser." },
-        cloud: { q: "Does Vulora send my financial data to the cloud?", a: "Vulora is being designed with a local-first privacy vision and reduced cloud dependency. Product behavior may evolve during beta." },
-        when: { q: "When will it be available?", a: "The first private beta is planned as a preview. Join the waitlist to receive updates." },
-        advice: { q: "Is this financial advice?", a: "No. Vulora content is informational and does not replace professional financial, legal, accounting or tax advice." }
+        what: { q: "What is Vulora?", a: "A proof of concept and engineering case study: a private financial-intelligence app with on-device inference by default, and the option to route it to trusted providers you configure — a model on your LAN (e.g. your MacBook), at home, or in a private cloud." },
+        stack: { q: "What's the stack?", a: "Flutter and Dart on the client, a pluggable inference layer (on-device Gemma by default, or trusted providers on your LAN or private cloud) behind a custom harness with guardrails and tooling, and a local-first data layer (Drift / Hive)." },
+        why: { q: "Why run local models?", a: "Because sensitive financial data shouldn't have to pass through third-party clouds. Local inference — on the device, your LAN, or a private endpoint you trust — makes privacy an architectural guarantee instead of a policy promise." },
+        available: { q: "Can I download it?", a: "Not yet — Vulora is a work-in-progress POC, not a publicly released product. It exists to demonstrate the engineering, not to sell anything." },
+        bank: { q: "Is Vulora a bank or financial advice?", a: "No. Vulora is not a bank, financial institution, broker or investment adviser, and nothing here is financial, legal, accounting or tax advice." }
       }
     },
     footer: {
-      tagline: "Private financial intelligence, designed with restraint.",
-      privacy: "Privacy Policy",
-      cookies: "Cookie Policy",
-      terms: "Terms of Use",
+      tagline: "A local-first AI engineering case study, built in the open.",
       copy: "© 2026 Vulora. All rights reserved."
     },
     cookies: {
@@ -160,63 +189,25 @@ const translations = {
       analytics: "Analytics and marketing",
       save: "Save preferences"
     },
-    legal: { back: "Back to site" },
-    privacyPage: {
-      eyebrow: "Legal",
-      title: "Privacy Policy",
-      updated: "Last updated: June 18, 2026",
-      sections: {
-        collect: { title: "What we collect", text: "This landing page may collect your optional name, email address, consent status and UTM parameters from the URL when you join the waitlist." },
-        use: { title: "How we use it", text: "We use this information to manage the interested users list, send project updates and understand traffic sources." },
-        control: { title: "Your choices", text: "You may request access, correction or deletion of your landing page data by contacting privacy@vulora.com.br." },
-        project: { title: "Development notice", text: "The Vulora application is a project in development. Product features, data handling and availability may change as the beta evolves." },
-        updates: { title: "Updates", text: "This policy may be updated from time to time. We avoid absolute promises and aim to describe our practices clearly." }
-      }
-    },
-    cookiesPage: {
-      eyebrow: "Legal",
-      title: "Cookie Policy",
-      updated: "Last updated: June 18, 2026",
-      sections: {
-        necessary: { title: "Necessary storage", text: "We use necessary browser storage for basic site behavior, such as remembering your language and cookie preferences." },
-        optional: { title: "Non-essential cookies", text: "Analytics or marketing tools should only run after your consent. They are off by default on this static landing page." },
-        manage: { title: "Managing consent", text: "The cookie banner on the landing page lets you accept all, reject non-essential storage or manage preferences. You can clear browser storage to reset the choice." }
-      }
-    },
-    termsPage: {
-      eyebrow: "Legal",
-      title: "Terms of Use",
-      updated: "Last updated: June 18, 2026",
-      sections: {
-        site: { title: "This website", text: "This site is an informational landing page used to present Vulora and collect interest in a private beta." },
-        notFinancial: { title: "No financial services", text: "Vulora is not a financial institution, bank, broker, investment adviser or financial consultancy." },
-        noAdvice: { title: "No professional advice", text: "Information on this site is not financial, legal, accounting or tax advice and should not replace qualified professional guidance." },
-        liability: { title: "Liability", text: "The site is provided for general information. To the extent permitted by law, Vulora is not responsible for losses arising from reliance on preview information or temporary unavailability." }
-      }
-    }
+    legal: { back: "Back to site" }
   },
   "pt-BR": {
     meta: {
-      title: "Vulora — Inteligência Financeira Privada",
-      description: "Uma experiência financeira privada e nativa de IA, criada para transformar seu dinheiro em uma conversa.",
-      ogTitle: "Vulora — Inteligência Financeira Privada",
-      ogDescription: "Uma experiência financeira privada e nativa de IA, criada para transformar seu dinheiro em uma conversa.",
-      twitterTitle: "Vulora — Inteligência Financeira Privada",
-      twitterDescription: "Uma experiência financeira privada e nativa de IA, criada para transformar seu dinheiro em uma conversa.",
-      privacyTitle: "Política de Privacidade — Vulora",
-      privacyDescription: "Política de privacidade da landing page da Vulora.",
-      cookiesTitle: "Política de Cookies — Vulora",
-      cookiesDescription: "Política de cookies da Vulora.",
-      termsTitle: "Termos de Uso — Vulora",
-      termsDescription: "Termos de uso da Vulora."
+      title: "Vulora — IA on-device, um estudo de caso de engenharia",
+      description: "A Vulora é uma prova de conceito de inteligência financeira privada com inferência local-first — no dispositivo, na sua rede local ou em endpoints privados de confiança — um estudo de caso de engenharia em IA offline-first e privacy-first, construído em Flutter.",
+      ogTitle: "Vulora — IA on-device, um estudo de caso de engenharia",
+      ogDescription: "A Vulora é uma prova de conceito de inteligência financeira privada com inferência local-first — no dispositivo, na sua rede local ou em endpoints privados de confiança — um estudo de caso de engenharia em IA offline-first e privacy-first, construído em Flutter.",
+      twitterTitle: "Vulora — IA on-device, um estudo de caso de engenharia",
+      twitterDescription: "A Vulora é uma prova de conceito de inteligência financeira privada com inferência local-first — no dispositivo, na sua rede local ou em endpoints privados de confiança — um estudo de caso de engenharia em IA offline-first e privacy-first, construído em Flutter."
     },
-    nav: { product: "Produto", showcase: "App", privacy: "Privacidade", beta: "Beta", faq: "FAQ", waitlist: "Entrar na lista" },
+    nav: { thesis: "Tese", showcase: "App", engineering: "Engenharia", privacy: "Privacidade", faq: "FAQ", contact: "Falar comigo" },
     hero: {
-      badge: "IA privada · Local-first · Finanças",
-      title: "Inteligência financeira privada.",
-      subtitle: "A Vulora transforma sua vida financeira em uma conversa privada — inteligente, contextual e desenhada para parecer viva.",
-      primaryCta: "Entrar no beta privado",
-      secondaryCta: "Ver demo"
+      badge: "Estudo de caso de engenharia · IA local-first · Flutter",
+      title: "Inteligência financeira sob seu controle.",
+      subtitle: "Uma prova de conceito com inferência on-device por padrão — ou direcionada para provedores confiáveis na sua rede local ou nuvem privada. IA offline-first e contextual que nunca entrega seus dados a nuvens de terceiros.",
+      primaryCta: "Explorar a construção",
+      secondaryCta: "Ver demo",
+      videoLabel: "Assistir vídeo de apresentação"
     },
     mockup: {
       user: "Posso gastar menos este mês?",
@@ -225,74 +216,70 @@ const translations = {
       metricValue: "−18% assinaturas"
     },
     showcase: {
-      eyebrow: "Dentro do app",
-      title: "Inteligência silenciosa, no seu bolso.",
-      subtitle: "Uma interface escura em liquid glass, desenhada para manter sua vida financeira privada — conversacional, contextual e inconfundivelmente sua.",
+      eyebrow: "Dentro da POC",
+      title: "Uma interface generativa, renderizada no dispositivo.",
+      subtitle: "Uma interface escura em liquid glass onde o modelo compõe componentes efêmeros em tempo real — conversacional, contextual e livre de nuvens de terceiros.",
       slides: {
         overview: {
           alt: "Tela inicial do app Vulora",
-          caption: "Sua vida financeira, em conversa."
+          caption: "UI generativa, composta no dispositivo."
         }
       }
     },
-    conversation: {
-      eyebrow: "O produto",
-      title: "Não é um dashboard. É uma conversa.",
+    thesis: {
+      eyebrow: "A premissa",
+      title: "Enviar dados financeiros sensíveis para nuvens de terceiros não deveria ser o padrão da indústria.",
+      subtitle: "A Vulora é a resposta técnica a essa premissa: uma camada de inteligência local-first — no dispositivo, na sua rede local ou em um endpoint privado de confiança — que mantém contexto e dados com você e trata nuvens de terceiros como opcionais, não obrigatórias.",
       cards: {
-        ask: { title: "Pergunte naturalmente", text: "Converse com seu dinheiro como falaria com um analista de confiança." },
-        spend: { title: "Entenda seus gastos", text: "Veja contexto, padrões e sinais sem encarar gráficos o tempo todo." },
-        private: { title: "Mantenha dados privados", text: "Criada a partir da convicção de que dados financeiros sensíveis exigem discrição." }
+        local: { title: "Local por padrão", text: "A inferência roda onde você escolher — no dispositivo, na sua rede doméstica ou em um endpoint privado de confiança — sem rotear seu dinheiro por APIs públicas." },
+        offline: { title: "Arquitetura offline-first", text: "Contexto e histórico ficam com você. O app continua útil com ou sem rede." },
+        sovereign: { title: "Soberania de dados", text: "Privacidade como decisão de arquitetura, não um checkbox — dados sensíveis nunca precisam sair do dispositivo." }
+      }
+    },
+    engineering: {
+      eyebrow: "Por baixo dos panos",
+      title: "A engenharia por trás da prova de conceito.",
+      subtitle: "O difícil não é a ideia — é fazer um LLM local ser rápido, seguro e confiável em hardware móvel. Estes são os problemas que este projeto resolve.",
+      cards: {
+        llm: { tag: "Gemma 4 E2B · GPU", title: "Caminho de inferência on-device", text: "Um modelo Gemma 4 E2B de ~2.6 GB roda localmente na GPU via flutter_gemma — download opt-in e entrada de imagem desativada para evitar OOM. O mesmo harness também direciona para provedores confiáveis na sua rede local ou nuvem privada." },
+        tools: { tag: "21 tools · Function calling", title: "Uma camada de tools agentic", text: "21 tools tipadas despachadas para handlers Dart determinísticos — gastos, orçamentos, consultas financeiras e memória — tudo via function calling." },
+        guardrails: { tag: "Confirmações · Privacidade", title: "Guardrails por design", text: "Ações destrutivas esperam um card de confirmação explícito; memórias privadas nunca voltam ao modelo e categorias sensíveis são recusadas de imediato." },
+        genui: { tag: "Visuais do app", title: "Generative UI determinística", text: "As tools retornam payloads visuais tipados — cards de orçamento e confirmação — renderizados nativamente no chat. Sem JSON do modelo conduzindo a tela." },
+        streaming: { tag: "Streaming · Contexto", title: "Streaming sob controle", text: "Streaming de tokens em tempo real com traços de raciocínio, um mutex serializando chamadas FFI nativas, poda por token-buffer e custo de contexto ao vivo." },
+        storage: { tag: "Drift · Hive", title: "Persistência offline-first", text: "Uma camada SQLite relacional (Drift, 9 tabelas, foreign keys garantidas, dinheiro em centavos) mais Hive key-value rápido — todos os dados ficam no app, no dispositivo." },
       }
     },
     privacy: {
       eyebrow: "Privacidade por design",
-      title: "Inteligência financeira deve parecer próxima, não exposta.",
-      text: "A Vulora está sendo desenhada para reduzir dependência da nuvem, manter contexto perto de você e tornar finanças pessoais rápidas, silenciosas e confiáveis.",
+      title: "Privacidade é decisão de arquitetura, não uma funcionalidade.",
+      text: "A Vulora é construída para minimizar dependência da nuvem, manter o contexto no dispositivo e tornar finanças pessoais rápidas, silenciosas e confiáveis — privacidade desenhada no sistema, não acoplada depois.",
       cards: {
         sensitive: { title: "Sensível por natureza", text: "Dados sobre dinheiro merecem limites claros e cuidado no tratamento." },
-        cloud: { title: "Menos dependência da nuvem", text: "A visão é uma inteligência local-first, com nuvem usada de forma intencional." },
+        cloud: { title: "Menos dependência da nuvem", text: "Inteligência local-first, com a nuvem usada só quando ela é realmente a ferramenta certa." },
         offline: { title: "Rápida e contextual", text: "Projetada para uma experiência offline-first que entende seu contexto." }
       }
     },
-    beta: {
-      eyebrow: "Beta privado",
-      title: "Algo privado está chegando.",
-      subtitle: "Estamos preparando o primeiro beta privado da Vulora."
-    },
-    countdown: { days: "Dias", hours: "Horas", minutes: "Minutos", seconds: "Segundos" },
-    form: {
-      title: "Entre na lista",
-      subtitle: "Convites de acesso antecipado serão enviados de forma privada.",
-      name: "Nome (opcional)",
-      namePlaceholder: "Seu nome",
-      email: "E-mail",
-      emailPlaceholder: "voce@exemplo.com",
-      consent: "Aceito receber novidades sobre a Vulora e entendo que posso cancelar a inscrição a qualquer momento.",
-      submit: "Solicitar acesso",
-      loading: "Enviando solicitação…",
-      success: "Você está na lista. Entraremos em contato de forma privada.",
-      successTitle: "Você está na lista",
-      successSubtitle: "Entraremos em contato de forma privada quando o beta abrir.",
-      invalidEmail: "Informe um e-mail válido.",
-      consentRequired: "O consentimento é obrigatório para entrar na lista.",
-      error: "Algo deu errado. Tente novamente."
+    contact: {
+      eyebrow: "O engenheiro",
+      title: "Uma prova de conceito, construída de mente aberta.",
+      text: "A Vulora nasceu de uma dor pessoal — um problema real que eu queria resolver bem — e virou um mergulho profundo em edge AI: um harness próprio com guardrails e tooling, um benchmark privado para escolher um modelo base para fine-tuning e uma arquitetura local-first com inferência plugável — on-device, na rede local ou em nuvem privada. Sem lançamento, sem pitch. Só a engenharia, à vista de todos.",
+      note: "Se você trabalha com arquitetura mobile, IA aplicada ou inferência na borda, vamos bater um papo.",
+      site: "Site pessoal",
+      x: "Perfil no X"
     },
     faq: {
       eyebrow: "FAQ",
-      title: "Respostas claras, promessas silenciosas.",
+      title: "Respostas claras, sem hype.",
       items: {
-        what: { q: "O que é a Vulora?", a: "A Vulora é um projeto de inteligência financeira pessoal criado para tornar sua vida financeira conversacional, contextual e privada." },
-        bank: { q: "A Vulora é um banco?", a: "Não. A Vulora não é banco, instituição financeira, corretora ou consultoria de investimentos." },
-        cloud: { q: "A Vulora envia meus dados financeiros para a nuvem?", a: "A Vulora está sendo desenhada com uma visão local-first de privacidade e menor dependência da nuvem. O comportamento do produto pode evoluir durante o beta." },
-        when: { q: "Quando estará disponível?", a: "O primeiro beta privado está planejado como uma versão preview. Entre na lista para receber novidades." },
-        advice: { q: "Isso é aconselhamento financeiro?", a: "Não. O conteúdo da Vulora é informativo e não substitui orientação profissional financeira, jurídica, contábil ou tributária." }
+        what: { q: "O que é a Vulora?", a: "Uma prova de conceito e estudo de caso de engenharia: um app de inteligência financeira privada com inferência on-device por padrão, e opção de direcionar para provedores confiáveis que você configura — um modelo na sua rede local (por exemplo, no MacBook), em casa ou em uma nuvem privada." },
+        stack: { q: "Qual é a stack?", a: "Flutter e Dart no cliente, uma camada de inferência plugável (Gemma on-device por padrão, ou provedores confiáveis na sua rede local ou nuvem privada) atrás de um harness próprio com guardrails e tooling, e uma camada de dados local-first (Drift / Hive)." },
+        why: { q: "Por que rodar modelos locais?", a: "Porque dados financeiros sensíveis não deveriam precisar passar por nuvens de terceiros. Inferência local — no dispositivo, na sua rede ou em um endpoint privado de confiança — torna a privacidade uma garantia de arquitetura, não uma promessa de política." },
+        available: { q: "Posso baixar?", a: "Ainda não — a Vulora é uma POC em andamento, não um produto lançado publicamente. Ela existe para demonstrar a engenharia, não para vender nada." },
+        bank: { q: "A Vulora é um banco ou aconselhamento financeiro?", a: "Não. A Vulora não é banco, instituição financeira, corretora ou consultoria de investimentos, e nada aqui é aconselhamento financeiro, jurídico, contábil ou tributário." }
       }
     },
     footer: {
-      tagline: "Inteligência financeira privada, desenhada com discrição.",
-      privacy: "Política de Privacidade",
-      cookies: "Política de Cookies",
-      terms: "Termos de Uso",
+      tagline: "Um estudo de caso de engenharia em IA local-first, construído à vista de todos.",
       copy: "© 2026 Vulora. Todos os direitos reservados."
     },
     cookies: {
@@ -305,40 +292,7 @@ const translations = {
       analytics: "Analytics e marketing",
       save: "Salvar preferências"
     },
-    legal: { back: "Voltar ao site" },
-    privacyPage: {
-      eyebrow: "Legal",
-      title: "Política de Privacidade",
-      updated: "Última atualização: 18 de junho de 2026",
-      sections: {
-        collect: { title: "O que coletamos", text: "Esta landing page pode coletar seu nome opcional, endereço de e-mail, status de consentimento e parâmetros UTM da URL quando você entra na lista de espera." },
-        use: { title: "Como usamos", text: "Usamos essas informações para gerenciar a lista de interessados, enviar novidades do projeto e entender a origem do tráfego." },
-        control: { title: "Suas escolhas", text: "Você pode solicitar acesso, correção ou exclusão dos seus dados da landing page entrando em contato por privacy@vulora.com.br." },
-        project: { title: "Aviso de desenvolvimento", text: "A aplicação Vulora é um projeto em desenvolvimento. Funcionalidades, tratamento de dados e disponibilidade podem mudar conforme o beta evolui." },
-        updates: { title: "Atualizações", text: "Esta política pode ser atualizada periodicamente. Evitamos promessas absolutas e buscamos descrever nossas práticas com clareza." }
-      }
-    },
-    cookiesPage: {
-      eyebrow: "Legal",
-      title: "Política de Cookies",
-      updated: "Última atualização: 18 de junho de 2026",
-      sections: {
-        necessary: { title: "Armazenamento necessário", text: "Usamos armazenamento necessário do navegador para o funcionamento básico do site, como lembrar seu idioma e suas preferências de cookies." },
-        optional: { title: "Cookies não essenciais", text: "Ferramentas de analytics ou marketing só devem rodar após seu consentimento. Elas ficam desligadas por padrão nesta landing estática." },
-        manage: { title: "Gerenciar consentimento", text: "O banner de cookies na landing permite aceitar tudo, rejeitar armazenamento não essencial ou gerenciar preferências. Você pode limpar o armazenamento do navegador para redefinir a escolha." }
-      }
-    },
-    termsPage: {
-      eyebrow: "Legal",
-      title: "Termos de Uso",
-      updated: "Última atualização: 18 de junho de 2026",
-      sections: {
-        site: { title: "Este site", text: "Este site é uma landing page informativa usada para apresentar a Vulora e captar interessados em um beta privado." },
-        notFinancial: { title: "Sem serviços financeiros", text: "A Vulora não é instituição financeira, banco, corretora, consultoria de investimentos ou consultoria financeira." },
-        noAdvice: { title: "Sem aconselhamento profissional", text: "As informações deste site não constituem aconselhamento financeiro, jurídico, contábil ou tributário e não substituem orientação profissional qualificada." },
-        liability: { title: "Responsabilidade", text: "O site é fornecido para informação geral. Na extensão permitida por lei, a Vulora não se responsabiliza por perdas decorrentes de confiança em informações de preview ou indisponibilidade temporária." }
-      }
-    }
+    legal: { back: "Voltar ao site" }
   }
 };
 
@@ -364,9 +318,7 @@ function applyLanguage(lang) {
   localStorage.setItem("vulora_language", currentLanguage);
   document.documentElement.lang = currentLanguage === "pt-BR" ? "pt-BR" : "en";
 
-  document.querySelectorAll("[data-language-select]").forEach((select) => {
-    select.value = currentLanguage;
-  });
+  syncLanguageSwitch();
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     const value = getTranslation(element.dataset.i18n, currentLanguage);
@@ -394,10 +346,97 @@ function applyLanguage(lang) {
   if (refreshShowcaseCarousel) refreshShowcaseCarousel();
 }
 
-function initLanguage() {
-  document.querySelectorAll("[data-language-select]").forEach((select) => {
-    select.addEventListener("change", (event) => applyLanguage(event.target.value));
+/* --------------------------------------------------- custom language switch */
+
+const LANGUAGE_META = {
+  "pt-BR": { flag: "assets/flags/br.svg", label: "Português" },
+  en: { flag: "assets/flags/us.svg", label: "English" }
+};
+
+function syncLanguageSwitch() {
+  const meta = LANGUAGE_META[currentLanguage] || LANGUAGE_META.en;
+  document.querySelectorAll("[data-language-switch]").forEach((root) => {
+    const flag = root.querySelector("[data-language-flag]");
+    const label = root.querySelector("[data-language-label]");
+    if (flag) flag.src = meta.flag;
+    if (label) label.textContent = meta.label;
+    root.querySelectorAll("[data-lang]").forEach((option) => {
+      option.setAttribute("aria-selected", option.dataset.lang === currentLanguage ? "true" : "false");
+    });
   });
+}
+
+function initLanguageSwitch() {
+  document.querySelectorAll("[data-language-switch]").forEach((root) => {
+    const trigger = root.querySelector("[data-language-trigger]");
+    const menu = root.querySelector("[data-language-menu]");
+    if (!trigger || !menu) return;
+
+    const options = Array.from(menu.querySelectorAll("[data-lang]"));
+    options.forEach((option) => option.setAttribute("tabindex", "-1"));
+
+    const open = (focusSelected) => {
+      menu.hidden = false;
+      root.classList.add("is-open");
+      trigger.setAttribute("aria-expanded", "true");
+      if (focusSelected) {
+        const index = Math.max(0, options.findIndex((o) => o.dataset.lang === currentLanguage));
+        options[index]?.focus();
+      }
+    };
+
+    const close = (returnFocus) => {
+      menu.hidden = true;
+      root.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+      if (returnFocus) trigger.focus();
+    };
+
+    const choose = (option) => {
+      applyLanguage(option.dataset.lang);
+      close(true);
+    };
+
+    trigger.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (menu.hidden) open(false);
+      else close(false);
+    });
+
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open(true);
+      }
+    });
+
+    options.forEach((option, index) => {
+      option.addEventListener("click", () => choose(option));
+      option.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          choose(option);
+        } else if (event.key === "ArrowDown") {
+          event.preventDefault();
+          options[(index + 1) % options.length].focus();
+        } else if (event.key === "ArrowUp") {
+          event.preventDefault();
+          options[(index - 1 + options.length) % options.length].focus();
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          close(true);
+        }
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!root.contains(event.target)) close(false);
+    });
+  });
+}
+
+function initLanguage() {
+  initLanguageSwitch();
   applyLanguage(currentLanguage);
   document.documentElement.classList.remove("pre-i18n");
 }
@@ -452,35 +491,6 @@ function initReveal() {
   hidden.forEach((element) => observer.observe(element));
 }
 
-/* ----------------------------------------------------------- countdown */
-
-function initCountdown() {
-  const nodes = {
-    days: document.querySelector('[data-countdown="days"]'),
-    hours: document.querySelector('[data-countdown="hours"]'),
-    minutes: document.querySelector('[data-countdown="minutes"]'),
-    seconds: document.querySelector('[data-countdown="seconds"]')
-  };
-  if (!nodes.days) return;
-
-  const target = new Date(LAUNCH_DATE).getTime();
-  const pad = (value) => String(value).padStart(2, "0");
-  const update = () => {
-    const distance = Math.max(0, target - Date.now());
-    const days = Math.floor(distance / 86400000);
-    const hours = Math.floor((distance % 86400000) / 3600000);
-    const minutes = Math.floor((distance % 3600000) / 60000);
-    const seconds = Math.floor((distance % 60000) / 1000);
-    nodes.days.textContent = pad(days);
-    nodes.hours.textContent = pad(hours);
-    nodes.minutes.textContent = pad(minutes);
-    nodes.seconds.textContent = pad(seconds);
-  };
-
-  update();
-  setInterval(update, 1000);
-}
-
 /* ----------------------------------------------------------- parallax */
 
 function initParallax() {
@@ -525,130 +535,6 @@ function initMagnetic() {
     btn.addEventListener("pointerleave", () => {
       btn.style.transform = "";
     });
-  });
-}
-
-/* ----------------------------------------------------------- lead form */
-
-function getUtmPayload() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    utm_source: params.get("utm_source") || "",
-    utm_medium: params.get("utm_medium") || "",
-    utm_campaign: params.get("utm_campaign") || "",
-    utm_content: params.get("utm_content") || "",
-    utm_term: params.get("utm_term") || ""
-  };
-}
-
-function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
-function setFieldState(input, state) {
-  const field = input.closest(".field");
-  if (!field) return;
-  field.classList.remove("is-invalid", "is-valid");
-  if (state) field.classList.add(`is-${state}`);
-}
-
-function showStatus(status, message, type = "") {
-  status.textContent = message;
-  status.classList.remove("error", "success");
-  status.classList.remove("is-visible");
-  if (type) status.classList.add(type);
-  requestAnimationFrame(() => status.classList.add("is-visible"));
-}
-
-function initLeadForm() {
-  const form = document.querySelector("[data-lead-form]");
-  if (!form) return;
-
-  const status = form.querySelector("[data-form-status]");
-  const button = form.querySelector('button[type="submit"]');
-  const emailInput = form.querySelector('input[name="email"]');
-  const consentInput = form.querySelector('input[name="consent"]');
-
-  emailInput?.addEventListener("input", () => {
-    if (emailInput.value.trim() && isValidEmail(emailInput.value.trim())) {
-      setFieldState(emailInput, "valid");
-    } else {
-      setFieldState(emailInput, null);
-    }
-  });
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    status.classList.remove("is-visible", "error", "success");
-
-    const formData = new FormData(form);
-    if (formData.get("website")) return;
-
-    const email = String(formData.get("email") || "").trim();
-    const consent = formData.get("consent") === "on";
-
-    if (!isValidEmail(email)) {
-      setFieldState(emailInput, "invalid");
-      showStatus(status, getTranslation("form.invalidEmail"), "error");
-      emailInput?.focus();
-      return;
-    }
-    setFieldState(emailInput, "valid");
-
-    if (!consent) {
-      showStatus(status, getTranslation("form.consentRequired"), "error");
-      consentInput?.focus();
-      return;
-    }
-
-    const payload = {
-      name: String(formData.get("name") || "").trim(),
-      email,
-      consent: true,
-      language: getCurrentLanguage(),
-      source: "vulora-landing",
-      ...getUtmPayload(),
-      created_at: new Date().toISOString()
-    };
-
-    button.disabled = true;
-    button.classList.add("is-loading");
-    button.textContent = getTranslation("form.loading");
-
-    try {
-      if (LEADS_ENDPOINT) {
-        const response = await fetch(LEADS_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        if (!response.ok) throw new Error(`Lead endpoint failed: ${response.status}`);
-      } else {
-        console.info("Vulora lead payload", payload);
-        await new Promise((resolve) => setTimeout(resolve, 700));
-      }
-      form.reset();
-      setFieldState(emailInput, null);
-      form.setAttribute("data-state", "success");
-      const heading = form.querySelector(".form-heading");
-      if (heading) {
-        heading.innerHTML = "";
-        const title = document.createElement("h3");
-        title.textContent = getTranslation("form.successTitle");
-        const sub = document.createElement("p");
-        sub.textContent = getTranslation("form.successSubtitle");
-        heading.appendChild(title);
-        heading.appendChild(sub);
-      }
-      showStatus(status, getTranslation("form.success"), "success");
-    } catch (error) {
-      console.error(error);
-      showStatus(status, getTranslation("form.error"), "error");
-    } finally {
-      button.disabled = false;
-      button.classList.remove("is-loading");
-      button.textContent = getTranslation("form.submit");
-    }
   });
 }
 
@@ -704,9 +590,58 @@ function initDemoButton() {
   const button = document.querySelector("[data-demo-button]");
   if (!button) return;
 
+  const DEMO_SCROLL_EXTRA = 100;
+
   button.addEventListener("click", () => {
     const target = document.querySelector("#showcase") || document.querySelector(".device");
-    target?.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const centeredTop = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+    window.scrollTo({ top: Math.max(0, centeredTop + DEMO_SCROLL_EXTRA), behavior: "smooth" });
+  });
+}
+
+function initVideoModal() {
+  const trigger = document.querySelector("[data-video-modal-trigger]");
+  const modal = document.querySelector("[data-video-modal]");
+  const iframe = modal?.querySelector("[data-video-modal-iframe]");
+  const videoId = parseYouTubeId(YOUTUBE_PRESENTATION_ID);
+
+  if (!trigger || !modal || !iframe || !videoId) return;
+
+  trigger.hidden = false;
+  let lastFocus = null;
+
+  function closeModal() {
+    modal.classList.remove("is-open");
+    document.body.classList.remove("modal-open");
+    iframe.removeAttribute("src");
+
+    window.setTimeout(() => {
+      if (!modal.classList.contains("is-open")) modal.hidden = true;
+    }, 280);
+
+    lastFocus?.focus();
+  }
+
+  function openModal() {
+    lastFocus = document.activeElement;
+    iframe.src = buildYouTubeEmbedUrl(videoId);
+    modal.hidden = false;
+    document.body.classList.add("modal-open");
+    requestAnimationFrame(() => modal.classList.add("is-open"));
+    modal.querySelector(".video-modal__close")?.focus();
+  }
+
+  trigger.addEventListener("click", openModal);
+
+  modal.querySelector(".video-modal__close")?.addEventListener("click", closeModal);
+
+  // Close on backdrop click and on Escape, matching standard dialog behaviour.
+  modal.querySelector(".video-modal__backdrop")?.addEventListener("click", closeModal);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
   });
 }
 
@@ -841,12 +776,11 @@ function initHeaderScrolled() {
 // the instant feel of server-side rendered pages.
 initLanguage();
 initReveal();
-initCountdown();
 initParallax();
 initMagnetic();
-initLeadForm();
 initCookies();
 initDemoButton();
+initVideoModal();
 initShowcaseCarousel();
 initHeaderScrolled();
 
