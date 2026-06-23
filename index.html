@@ -6,29 +6,29 @@
     <script>document.documentElement.classList.add('pre-i18n')</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#000000">
-    <title data-i18n-meta="meta.title">Vulora — On-device AI, an engineering case study</title>
-    <meta name="description" content="Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter." data-i18n-meta="meta.description">
+    <title data-i18n-meta="meta.title">Vulora — Private financial AI</title>
+    <meta name="description" content="A functional Flutter app and case study exploring private financial AI, local-first inference, offline data and mobile architecture." data-i18n-meta="meta.description">
     <meta name="author" content="Vulora">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://vulora.com.br/">
 
-    <meta property="og:title" content="Vulora — On-device AI, an engineering case study" data-i18n-meta="meta.ogTitle">
-    <meta property="og:description" content="Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter." data-i18n-meta="meta.ogDescription">
+    <meta property="og:title" content="Vulora — Private financial AI, local-first and built with Flutter" data-i18n-meta="meta.ogTitle">
+    <meta property="og:description" content="A technical case study on building a financial assistant with local AI, offline data, tool calling and privacy by architecture." data-i18n-meta="meta.ogDescription">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vulora.com.br/">
-    <meta property="og:image" content="https://vulora.com.br/assets/logo.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:image:alt" content="Vulora logo">
+    <meta property="og:image" content="https://vulora.com.br/assets/app-vulora.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="2607">
+    <meta property="og:image:alt" content="Vulora mobile app interface">
     <meta property="og:site_name" content="Vulora">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="pt_BR">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vulora — On-device AI, an engineering case study" data-i18n-meta="meta.twitterTitle">
-    <meta name="twitter:description" content="Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter." data-i18n-meta="meta.twitterDescription">
-    <meta name="twitter:image" content="https://vulora.com.br/assets/logo.png">
-    <meta name="twitter:image:alt" content="Vulora logo">
+    <meta name="twitter:title" content="Vulora — Private financial AI" data-i18n-meta="meta.twitterTitle">
+    <meta name="twitter:description" content="A functional Flutter app and case study exploring private financial AI, local-first inference, offline data and mobile architecture." data-i18n-meta="meta.twitterDescription">
+    <meta name="twitter:image" content="https://vulora.com.br/assets/app-vulora.webp">
+    <meta name="twitter:image:alt" content="Vulora mobile app interface">
 
     <link rel="icon" href="assets/favicon.png" sizes="any">
     <link rel="icon" type="image/png" href="assets/favicon/favicon-32x32.png" sizes="32x32">
@@ -47,7 +47,7 @@
       "name": "Vulora",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "iOS, Android",
-      "description": "A private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter."
+      "description": "A functional Flutter application and technical case study exploring private financial AI, local-first inference, offline data and modern mobile architecture."
     }
     </script>
   </head>
@@ -58,11 +58,12 @@
         <span>Vulora</span>
       </a>
       <nav class="nav-links" aria-label="Main">
-        <a href="#thesis" data-i18n="nav.thesis">Thesis</a>
-        <a href="#showcase" data-i18n="nav.showcase">App</a>
-        <a href="#engineering" data-i18n="nav.engineering">Engineering</a>
-        <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
-        <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <a href="#showcase" data-i18n="nav.demo">Demo</a>
+        <a href="#product" data-i18n="nav.product">Product</a>
+        <a href="#current" data-i18n="nav.features">Features</a>
+        <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
+        <a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a>
+        <a href="#contact" data-i18n="nav.about">About</a>
       </nav>
       <div class="header-actions">
         <div class="lang-switch" data-language-switch>
@@ -98,16 +99,12 @@
           <div class="container hero-grid">
             <div class="hero-copy reveal" data-parallax="0.04">
               <p class="badge" data-i18n="hero.badge">Engineering case study · Local-first AI · Flutter</p>
-              <h1 data-i18n="hero.title">Financial intelligence you control.</h1>
-              <p class="hero-subtitle" data-i18n="hero.subtitle">A proof of concept with on-device inference by default — or routed to trusted providers on your LAN or private cloud. Offline-first, contextual AI that never hands your data to third-party clouds.</p>
+              <h1 data-i18n="hero.title">Private financial intelligence, running where your data lives.</h1>
+              <p class="hero-subtitle" data-i18n="hero.subtitle">Vulora is a functional Flutter application exploring local-first financial AI: on-device, on your LAN, or on trusted private cloud endpoints. A case study in edge AI, privacy by architecture and modern mobile experience.</p>
               <div class="cta-row">
-                <a class="button button-primary" href="#engineering" data-magnetic data-i18n="hero.primaryCta">Explore the build</a>
-                <div class="cta-pair">
-                  <button class="button button-secondary" type="button" data-demo-button data-magnetic data-i18n="hero.secondaryCta">Watch demo</button>
-                  <button class="button button-secondary button-icon" type="button" data-video-modal-trigger data-magnetic data-i18n-attr="aria-label:hero.videoLabel" hidden aria-label="Watch presentation video">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-                  </button>
-                </div>
+                <a class="button button-primary" href="#showcase" data-magnetic data-i18n="hero.primaryCta">Watch demo</a>
+                <a class="button button-secondary" href="#architecture" data-magnetic data-i18n="hero.secondaryCta">Explore architecture</a>
+                <button class="button button-secondary" type="button" data-video-modal-trigger data-magnetic hidden data-i18n="hero.tertiaryCta">Watch presentation</button>
               </div>
             </div>
             <div class="phone-stage reveal" data-parallax="-0.05">
@@ -142,42 +139,91 @@
           </div>
         </section>
 
-        <section class="section" id="thesis">
+        <section class="section" id="problem">
           <div class="container narrow center reveal">
-            <p class="eyebrow" data-i18n="thesis.eyebrow">The premise</p>
-            <h2 data-i18n="thesis.title">Sending sensitive financial data to third-party clouds shouldn't be the industry default.</h2>
-            <p class="section-copy" data-i18n="thesis.subtitle">Vulora is the technical answer to that premise: a local-first intelligence layer — on-device, on your LAN, or on a private endpoint you trust — that keeps context and data with you and treats third-party clouds as optional, not mandatory.</p>
+            <p class="eyebrow" data-i18n="problem.eyebrow">The problem</p>
+            <h2 data-i18n="problem.title">Financial data is too sensitive to depend on public clouds by default.</h2>
+            <p class="section-copy" data-i18n="problem.text">Financial assistants need context, history, habits and personal decisions. But the more useful AI becomes, the more sensitive the data it needs to process. Vulora starts from a simple question: what if financial intelligence could run close to the data, instead of sending everything away?</p>
+          </div>
+        </section>
+
+        <section class="section product-section" id="product">
+          <div class="container split">
+            <div class="reveal">
+              <p class="eyebrow" data-i18n="product.eyebrow">The product</p>
+              <h2 data-i18n="product.title">A private financial AI in a conversational app experience.</h2>
+            </div>
+            <div class="product-copy reveal">
+              <p data-i18n="product.text">Vulora is an experimental financial app combining AI conversation, deterministic tools and local data to help users register expenses, query transactions, understand budgets and receive financial insights without depending by default on public cloud AI services.</p>
+              <p data-i18n="product.note">It is not a launched product yet. It is a functional application in progress and a technical case study in local-first AI for personal finance.</p>
+              <div class="status-strip" aria-label="Vulora status">
+                <span data-i18n="product.status.prototype">Functional prototype</span>
+                <span data-i18n="product.status.ai">Local-first AI</span>
+                <span data-i18n="product.status.tools">21+ tools</span>
+                <span data-i18n="product.status.i18n">PT/EN</span>
+                <span data-i18n="product.status.offline">Offline-first data</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="current">
+          <div class="container narrow center reveal">
+            <p class="eyebrow" data-i18n="current.eyebrow">Current state</p>
+            <h2 data-i18n="current.title">What already works in Vulora.</h2>
+            <p class="section-copy" data-i18n="current.subtitle">Vulora is still in development, but already has a functional foundation with AI, financial tools, local persistence and a mobile interface.</p>
           </div>
           <div class="container card-grid three">
             <article class="glass-card reveal">
               <div class="card-icon ask">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
               </div>
-              <h3 data-i18n="thesis.cards.local.title">Local by default</h3>
-              <p data-i18n="thesis.cards.local.text">Inference runs where you choose — on the device, your home network, or a trusted private endpoint — without routing your money through public APIs.</p>
+              <h3 data-i18n="current.cards.assistant.title">Conversational financial assistant</h3>
+              <p data-i18n="current.cards.assistant.text">Talk in natural language to register expenses, query financial information and interact with the app through AI.</p>
             </article>
             <article class="glass-card reveal">
               <div class="card-icon spend">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4-9 4 18 3-9h3"/></svg>
               </div>
-              <h3 data-i18n="thesis.cards.offline.title">Offline-first architecture</h3>
-              <p data-i18n="thesis.cards.offline.text">Context and history live with you. The app stays useful with or without a network.</p>
+              <h3 data-i18n="current.cards.tools.title">21+ functional tools</h3>
+              <p data-i18n="current.cards.tools.text">A typed tool layer for expenses, budgets, transactions, categories, private memory, language, currency, theme and export.</p>
             </article>
             <article class="glass-card reveal">
               <div class="card-icon lock">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/></svg>
               </div>
-              <h3 data-i18n="thesis.cards.sovereign.title">Data sovereignty</h3>
-              <p data-i18n="thesis.cards.sovereign.text">Privacy as an architectural decision, not a checkbox — sensitive data never has to leave the device.</p>
+              <h3 data-i18n="current.cards.inference.title">Local-first inference</h3>
+              <p data-i18n="current.cards.inference.text">On-device model execution, with the option to route inference to trusted providers on a LAN or private cloud.</p>
+            </article>
+            <article class="glass-card reveal">
+              <div class="card-icon db">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+              </div>
+              <h3 data-i18n="current.cards.persistence.title">Offline persistence</h3>
+              <p data-i18n="current.cards.persistence.text">Financial data and preferences live on the device, powered by SQLite/Drift and Hive.</p>
+            </article>
+            <article class="glass-card reveal">
+              <div class="card-icon ui">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6M7 16h4"/></svg>
+              </div>
+              <h3 data-i18n="current.cards.ui.title">Deterministic generative UI</h3>
+              <p data-i18n="current.cards.ui.text">The model calls tools, but the app renders visual components natively and predictably.</p>
+            </article>
+            <article class="glass-card reveal">
+              <div class="card-icon shield">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-2.8 8.4-7 10-4.2-1.6-7-5.6-7-10V6l7-3z"/><path d="M9 12l2 2 4-5"/></svg>
+              </div>
+              <h3 data-i18n="current.cards.confirmation.title">Confirmations for sensitive actions</h3>
+              <p data-i18n="current.cards.confirmation.text">Edits, deletions and exports require explicit confirmation before changing user data.</p>
             </article>
           </div>
         </section>
 
         <section class="section showcase-section" id="showcase">
           <div class="container narrow center reveal">
-            <p class="eyebrow" data-i18n="showcase.eyebrow">Inside the POC</p>
-            <h2 data-i18n="showcase.title">A generative UI, rendered on-device.</h2>
-            <p class="section-copy" data-i18n="showcase.subtitle">A dark, liquid-glass interface where the local model composes ephemeral components in real time — conversational, contextual and running without the cloud.</p>
+            <p class="eyebrow" data-i18n="showcase.eyebrow">Experience</p>
+            <h2 data-i18n="showcase.title">A mobile interface designed for contextual AI.</h2>
+            <p class="section-copy" data-i18n="showcase.subtitle">Vulora combines conversation, visual components and financial actions in a fluid experience. The AI interprets intent; the app executes tools and renders visual responses with control, safety and consistency.</p>
           </div>
           <div class="container showcase-wrap reveal" data-showcase-carousel>
             <div class="showcase-viewport" data-showcase-viewport tabindex="0" role="region" aria-roledescription="carousel" aria-label="App screenshots">
@@ -195,11 +241,11 @@
           </div>
         </section>
 
-        <section class="section" id="engineering">
+        <section class="section" id="architecture">
           <div class="container narrow center reveal">
             <p class="eyebrow" data-i18n="engineering.eyebrow">Under the hood</p>
-            <h2 data-i18n="engineering.title">The engineering behind the proof of concept.</h2>
-            <p class="section-copy" data-i18n="engineering.subtitle">The hard part isn't the idea — it's making a local LLM fast, safe and reliable on mobile hardware. These are the problems this project solves.</p>
+            <h2 data-i18n="engineering.title">The hard part is not creating a chatbot. It is making AI act with safety, context and privacy.</h2>
+            <p class="section-copy" data-i18n="engineering.subtitle">Vulora was built as a local-first architecture: model, tools, data and interface work together to deliver useful AI without giving up control.</p>
           </div>
           <div class="container card-grid three">
             <article class="glass-card tech-card reveal">
@@ -253,12 +299,74 @@
           </div>
         </section>
 
+        <section class="section stack-section" id="stack">
+          <div class="container narrow center reveal">
+            <p class="eyebrow" data-i18n="stack.eyebrow">Stack</p>
+            <h2 data-i18n="stack.title">A mobile architecture for private AI.</h2>
+            <p class="section-copy" data-i18n="stack.subtitle">Vulora combines a mobile app, local LLM, offline data and pluggable providers in a modular architecture.</p>
+          </div>
+          <div class="container stack-grid">
+            <article class="stack-card glass-card reveal"><h3 data-i18n="stack.blocks.client.title">Client</h3><p data-i18n="stack.blocks.client.text">Flutter · Dart · Provider · Custom design system · Liquid glass UI</p></article>
+            <article class="stack-card glass-card reveal"><h3 data-i18n="stack.blocks.local.title">Local AI</h3><p data-i18n="stack.blocks.local.text">Gemma · flutter_gemma · GPU backend · Streaming · Function calling</p></article>
+            <article class="stack-card glass-card reveal"><h3 data-i18n="stack.blocks.private.title">Private / LAN AI</h3><p data-i18n="stack.blocks.private.text">OpenAI-compatible endpoints · Anthropic Messages API · Custom providers · Private endpoints</p></article>
+            <article class="stack-card glass-card reveal"><h3 data-i18n="stack.blocks.data.title">Data Layer</h3><p data-i18n="stack.blocks.data.text">Drift · SQLite · Hive · Migrations · Money stored in cents</p></article>
+            <article class="stack-card glass-card reveal"><h3 data-i18n="stack.blocks.ux.title">UX & Product</h3><p data-i18n="stack.blocks.ux.text">PT/EN i18n · Runtime language switching · Audio input · Confirmation cards · Generative UI</p></article>
+            <article class="stack-card glass-card reveal"><h3 data-i18n="stack.blocks.reliability.title">Reliability</h3><p data-i18n="stack.blocks.reliability.text">Typed tool dispatcher · FFI mutex · Token pruning · Error states · Opt-in model download</p></article>
+          </div>
+        </section>
+
+        <section class="section decisions-section" id="decisions">
+          <div class="container narrow center reveal">
+            <p class="eyebrow" data-i18n="decisions.eyebrow">Technical decisions</p>
+            <h2 data-i18n="decisions.title">Real problems that shaped the architecture.</h2>
+            <p class="section-copy" data-i18n="decisions.subtitle">Vulora is not just an interface for AI. The project required decisions about local execution, safety, persistence, streaming, UX and privacy.</p>
+          </div>
+          <div class="container decision-grid">
+            <article class="decision-card glass-card reveal">
+              <h3 data-i18n="decisions.items.local.problem">Running local AI on mobile hardware</h3>
+              <div class="decision-card__grid">
+                <p><strong data-i18n="decisions.labels.decision">Decision</strong><span data-i18n="decisions.items.local.decision">Use on-device inference with a local model, opt-in download and adjustments to reduce excessive memory risk.</span></p>
+                <p><strong data-i18n="decisions.labels.result">Result</strong><span data-i18n="decisions.items.local.result">A functional foundation for private AI without depending by default on public APIs.</span></p>
+              </div>
+            </article>
+            <article class="decision-card glass-card reveal">
+              <h3 data-i18n="decisions.items.control.problem">Letting AI execute actions without losing control</h3>
+              <div class="decision-card__grid">
+                <p><strong data-i18n="decisions.labels.decision">Decision</strong><span data-i18n="decisions.items.control.decision">Separate model intent and app execution through typed tools and deterministic handlers.</span></p>
+                <p><strong data-i18n="decisions.labels.result">Result</strong><span data-i18n="decisions.items.control.result">The AI interprets the request; the application controls the action.</span></p>
+              </div>
+            </article>
+            <article class="decision-card glass-card reveal">
+              <h3 data-i18n="decisions.items.ui.problem">Creating generative UI without handing the screen to the model</h3>
+              <div class="decision-card__grid">
+                <p><strong data-i18n="decisions.labels.decision">Decision</strong><span data-i18n="decisions.items.ui.decision">Render native visual components from typed payloads.</span></p>
+                <p><strong data-i18n="decisions.labels.result">Result</strong><span data-i18n="decisions.items.ui.result">The experience feels generative while staying predictable, safe and consistent.</span></p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section roadmap-section" id="roadmap">
+          <div class="container narrow center reveal">
+            <p class="eyebrow" data-i18n="roadmap.eyebrow">Roadmap</p>
+            <h2 data-i18n="roadmap.title">Where Vulora is today — and where it is going.</h2>
+            <p class="section-copy" data-i18n="roadmap.subtitle">Vulora is an application in continuous development. The AI foundation, local data, tools and mobile experience already exist; the next steps deepen financial intelligence, UX and reliability.</p>
+          </div>
+          <div class="container roadmap-grid">
+            <article class="roadmap-card is-done reveal"><span data-i18n="roadmap.phase0.label">Phase 0 · Completed</span><h3 data-i18n="roadmap.phase0.title">AI foundation and tool calling</h3><p data-i18n="roadmap.phase0.text">AI chat, streaming, initial tools, theme control, calculator, financial transactions and conversation reset.</p></article>
+            <article class="roadmap-card is-done reveal"><span data-i18n="roadmap.phase1.label">Phase 1 · Completed</span><h3 data-i18n="roadmap.phase1.title">Persistence and financial domain</h3><p data-i18n="roadmap.phase1.text">Drift, Hive, categories, transactions, budgets, export, private memory and local data.</p></article>
+            <article class="roadmap-card is-done reveal"><span data-i18n="roadmap.phase2.label">Phase 2 · Completed</span><h3 data-i18n="roadmap.phase2.title">Mobile experience and design system</h3><p data-i18n="roadmap.phase2.text">Glass interface, brand splash, visual components, rich empty state, carousels, cards and consistent visual system.</p></article>
+            <article class="roadmap-card is-current reveal"><span data-i18n="roadmap.current.label">Current phase</span><h3 data-i18n="roadmap.current.title">Product refinement and public case study</h3><p data-i18n="roadmap.current.text">Landing page, demo, technical narrative, positioning clarity and case preparation for portfolio use.</p></article>
+            <article class="roadmap-card reveal"><span data-i18n="roadmap.next.label">Next steps</span><h3 data-i18n="roadmap.next.title">Deeper financial intelligence</h3><p data-i18n="roadmap.next.text">Financial summary, advanced aggregations, month-over-month comparisons, audio improvements, proactive disambiguation and context indicators.</p></article>
+          </div>
+        </section>
+
         <section class="section privacy-band" id="privacy">
           <div class="container split">
             <div class="reveal">
-              <p class="eyebrow" data-i18n="privacy.eyebrow">Private by design</p>
-              <h2 data-i18n="privacy.title">Privacy is an architecture decision, not a feature.</h2>
-              <p class="section-copy" data-i18n="privacy.text">Vulora is built to minimize cloud dependency, keep context on the device and make personal finance feel fast, quiet and trustworthy — privacy designed into the system, not bolted on.</p>
+              <p class="eyebrow" data-i18n="privacy.eyebrow">Privacy</p>
+              <h2 data-i18n="privacy.title">Privacy is not added at the end. It shapes the architecture.</h2>
+              <p class="section-copy" data-i18n="privacy.text">In Vulora, financial data, preferences, history and context are designed to stay close to the user. Cloud can be used when it makes sense, but it is not the mandatory starting point.</p>
             </div>
             <div class="privacy-list">
               <article class="mini-card reveal">
@@ -286,18 +394,20 @@
           </div>
         </section>
 
-        <section class="section" id="contact">
+        <section class="section contact-section" id="contact">
           <div class="container narrow center reveal">
             <p class="eyebrow" data-i18n="contact.eyebrow">The engineer</p>
-            <h2 data-i18n="contact.title">A proof of concept, built in the open mind.</h2>
+            <h2 data-i18n="contact.title">Built like a product. Documented as a case study.</h2>
           </div>
           <div class="container">
             <article class="contact-card glass-card reveal">
-              <p class="contact-lead" data-i18n="contact.text">Vulora started as a personal itch — a real problem I wanted to solve well — and became a deep dive into edge AI: a custom harness with guardrails and tooling, a private benchmark to choose a base model for fine-tuning, and a local-first architecture with pluggable inference — on-device, LAN, or private cloud. No launch, no pitch. Just the engineering, in public view.</p>
-              <p class="contact-note" data-i18n="contact.note">If you work on mobile architecture, applied AI or edge inference, let's have a chat.</p>
+              <p class="contact-lead" data-i18n="contact.text">I am a frontend engineer, and I created Vulora to explore a technical and product question: what would a truly private financial assistant look like if it could combine local AI, offline data and a modern mobile experience?</p>
+              <p class="contact-lead contact-lead--secondary" data-i18n="contact.text2">The project brings together Flutter architecture, local LLM inference, tool calling, offline persistence, i18n, streaming, design system, guardrails and a product vision applied to a sensitive domain: personal finance.</p>
+              <p class="contact-note" data-i18n="contact.note">If you work with mobile architecture, applied AI, fintech, privacy or local inference, let's talk.</p>
               <div class="cta-row contact-actions">
                 <a class="button button-primary" href="https://www.felipeneri.com/" target="_blank" rel="noopener" data-magnetic data-i18n="contact.site">Personal site</a>
-                <a class="button button-secondary" href="https://x.com/FelipeNeriDev" target="_blank" rel="noopener" data-magnetic data-i18n="contact.x">Profile on X</a>
+                <a class="button button-secondary" href="https://www.linkedin.com/in/nerifelipe/" target="_blank" rel="noopener" data-magnetic data-i18n="contact.linkedin">Connect on LinkedIn</a>
+                <a class="button button-secondary" href="https://github.com/felipeneri" target="_blank" rel="noopener" data-magnetic data-i18n="contact.github">View GitHub</a>
               </div>
             </article>
           </div>
@@ -314,23 +424,28 @@
               <p data-i18n="faq.items.what.a">A proof of concept and engineering case study: a private financial-intelligence app with on-device inference by default, and the option to route it to trusted providers you configure — a model on your LAN (e.g. your MacBook), at home, or in a private cloud.</p>
             </details>
             <details class="reveal">
-              <summary data-i18n="faq.items.stack.q">What's the stack?</summary>
-              <p data-i18n="faq.items.stack.a">Flutter and Dart on the client, a pluggable inference layer (on-device Gemma by default, or trusted providers on your LAN or private cloud) behind a custom harness with guardrails and tooling, and a local-first data layer (Drift / Hive).</p>
+              <summary data-i18n="faq.items.available.q">Is Vulora available for download?</summary>
+              <p data-i18n="faq.items.available.a">Not yet. Vulora is in development and exists today as a functional proof of concept and technical case study.</p>
             </details>
             <details class="reveal">
               <summary data-i18n="faq.items.why.q">Why run local models?</summary>
               <p data-i18n="faq.items.why.a">Because sensitive financial data shouldn't have to pass through third-party clouds. Local inference — on the device, your LAN, or a private endpoint you trust — makes privacy an architectural guarantee instead of a policy promise.</p>
             </details>
             <details class="reveal">
-              <summary data-i18n="faq.items.available.q">Can I download it?</summary>
-              <p data-i18n="faq.items.available.a">Not yet — Vulora is a work-in-progress POC, not a publicly released product. It exists to demonstrate the engineering, not to sell anything.</p>
+              <summary data-i18n="faq.items.stack.q">What's the stack?</summary>
+              <p data-i18n="faq.items.stack.a">Flutter and Dart on the client, local model support with Gemma/flutter_gemma, a pluggable inference layer, typed tools, local persistence with Drift/SQLite and Hive, PT/EN i18n and a custom design system.</p>
             </details>
             <details class="reveal">
               <summary data-i18n="faq.items.bank.q">Is Vulora a bank or financial advice?</summary>
               <p data-i18n="faq.items.bank.a">No. Vulora is not a bank, financial institution, broker or investment adviser, and nothing here is financial, legal, accounting or tax advice.</p>
             </details>
+            <details class="reveal">
+              <summary data-i18n="faq.items.cloud.q">Does the app use cloud?</summary>
+              <p data-i18n="faq.items.cloud.a">The proposal is local-first. Cloud can be used as an option, especially through private endpoints or trusted providers configured by the user, but it is not the mandatory default.</p>
+            </details>
           </div>
         </section>
+
       </main>
 
       <footer class="site-footer">

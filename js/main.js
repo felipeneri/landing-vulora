@@ -3,13 +3,33 @@ const SHOWCASE_SLIDES = [
     src: "assets/app-vulora.webp",
     altKey: "showcase.slides.overview.alt",
     captionKey: "showcase.slides.overview.caption"
+  },
+  {
+    src: "assets/app-vulora.webp",
+    altKey: "showcase.slides.insights.alt",
+    captionKey: "showcase.slides.insights.caption"
+  },
+  {
+    src: "assets/app-vulora.webp",
+    altKey: "showcase.slides.bills.alt",
+    captionKey: "showcase.slides.bills.caption"
+  },
+  {
+    src: "assets/app-vulora.webp",
+    altKey: "showcase.slides.vault.alt",
+    captionKey: "showcase.slides.vault.caption"
+  },
+  {
+    src: "assets/app-vulora.webp",
+    altKey: "showcase.slides.input.alt",
+    captionKey: "showcase.slides.input.caption"
   }
 ];
 
 let refreshShowcaseCarousel = null;
 
 // Paste a YouTube video ID or any YouTube URL (watch, youtu.be, embed, shorts).
-const YOUTUBE_PRESENTATION_ID = "Uz_iZ5OhZ6s";
+const YOUTUBE_PRESENTATION_ID = "LieSDjw8Amw";
 
 function parseYouTubeId(input) {
   if (!input) return "";
@@ -90,89 +110,154 @@ function createDeviceMockup(appSrc, alt, loading = "lazy") {
 const translations = {
   en: {
     meta: {
-      title: "Vulora — On-device AI, an engineering case study",
-      description: "Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter.",
-      ogTitle: "Vulora — On-device AI, an engineering case study",
-      ogDescription: "Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter.",
-      twitterTitle: "Vulora — On-device AI, an engineering case study",
-      twitterDescription: "Vulora is a private financial-intelligence proof of concept with local-first inference — on-device, on your LAN, or on trusted private endpoints — an engineering case study in offline-first, privacy-first AI built on Flutter."
+      title: "Vulora — Private financial AI",
+      description: "A functional Flutter app and case study exploring private financial AI, local-first inference, offline data and mobile architecture.",
+      ogTitle: "Vulora — Private financial AI, local-first and built with Flutter",
+      ogDescription: "A technical case study on building a financial assistant with local AI, offline data, tool calling and privacy by architecture.",
+      twitterTitle: "Vulora — Private financial AI",
+      twitterDescription: "A functional Flutter app and case study exploring private financial AI, local-first inference, offline data and mobile architecture."
     },
-    nav: { thesis: "Thesis", showcase: "App", engineering: "Engineering", privacy: "Privacy", faq: "FAQ", contact: "Get in touch" },
+    nav: { demo: "Demo", product: "Product", features: "Features", architecture: "Architecture", roadmap: "Roadmap", about: "About", contact: "Get in touch" },
     hero: {
-      badge: "Engineering case study · Local-first AI · Flutter",
-      title: "Financial intelligence you control.",
-      subtitle: "A proof of concept with on-device inference by default — or routed to trusted providers on your LAN or private cloud. Offline-first, contextual AI that never hands your data to third-party clouds.",
-      primaryCta: "Explore the build",
-      secondaryCta: "Watch demo",
-      videoLabel: "Watch presentation video"
+      badge: "Technical case study · Local-first AI · Flutter",
+      title: "Private financial intelligence, running where your data lives.",
+      subtitle: "Vulora is a functional Flutter application exploring local-first financial AI: on-device, on your LAN, or on trusted private cloud endpoints. A case study in edge AI, privacy by architecture and modern mobile experience.",
+      primaryCta: "Watch demo",
+      secondaryCta: "Explore architecture",
+      tertiaryCta: "Watch presentation"
     },
-    mockup: {
-      user: "Can I spend less this month?",
-      ai: "Yes. Subscriptions rose 18%. I found three quiet savings.",
-      metric: "Private insight",
-      metricValue: "−18% subscriptions"
+    problem: {
+      eyebrow: "The problem",
+      title: "Financial data is too sensitive to depend on public clouds by default.",
+      text: "A good financial assistant needs to know your context: your history, habits and day-to-day decisions. But the more it helps, the more sensitive data it has to reach — and in the traditional model that means sending your finances to third-party servers. Vulora starts from a different idea: what if that intelligence ran on your own device, next to the data, instead of shipping it away?"
     },
-    showcase: {
-      eyebrow: "Inside the POC",
-      title: "A generative UI, rendered on-device.",
-      subtitle: "A dark, liquid-glass interface where the model composes ephemeral components in real time — conversational, contextual and free of third-party clouds.",
-      slides: {
-        overview: {
-          alt: "Vulora app home screen",
-          caption: "Generative UI, composed on-device."
-        }
+    product: {
+      eyebrow: "The product",
+      title: "A private financial AI in a conversational app experience.",
+      text: "Vulora is an experimental financial app combining AI conversation, deterministic tools and local data to help users register expenses, query transactions, understand budgets and receive financial insights without depending by default on public cloud AI services.",
+      note: "It is not a launched product yet. It is a functional application in progress and a technical case study in local-first AI for personal finance.",
+      status: {
+        prototype: "Functional prototype",
+        ai: "Local-first AI",
+        tools: "21+ tools",
+        i18n: "PT/EN",
+        offline: "Offline-first data"
       }
     },
-    thesis: {
-      eyebrow: "The premise",
-      title: "Sending sensitive financial data to third-party clouds shouldn't be the industry default.",
-      subtitle: "Vulora is the technical answer to that premise: a local-first intelligence layer — on-device, on your LAN, or on a private endpoint you trust — that keeps context and data with you and treats third-party clouds as optional, not mandatory.",
+    current: {
+      eyebrow: "Current state",
+      title: "What already works in Vulora.",
+      subtitle: "Vulora is still in development, but already has a functional foundation with AI, financial tools, local persistence and a mobile interface.",
       cards: {
-        local: { title: "Local by default", text: "Inference runs where you choose — on the device, your home network, or a trusted private endpoint — without routing your money through public APIs." },
-        offline: { title: "Offline-first architecture", text: "Context and history live with you. The app stays useful with or without a network." },
-        sovereign: { title: "Data sovereignty", text: "Privacy as an architectural decision, not a checkbox — sensitive data never has to leave the device." }
+        assistant: { title: "Conversational financial assistant", text: "Talk in natural language to register expenses, query financial information and interact with the app through AI." },
+        tools: { title: "21+ functional tools", text: "A typed tool layer for expenses, budgets, transactions, categories, private memory, language, currency, theme and export." },
+        inference: { title: "Local-first inference", text: "On-device model execution, with the option to route inference to trusted providers on a LAN or private cloud." },
+        persistence: { title: "Offline persistence", text: "Financial data and preferences live on the device, powered by SQLite/Drift and Hive." },
+        ui: { title: "Deterministic generative UI", text: "The model calls tools, but the app renders visual components natively and predictably." },
+        confirmation: { title: "Confirmations for sensitive actions", text: "Edits, deletions and exports require explicit confirmation before changing user data." }
+      }
+    },
+    showcase: {
+      eyebrow: "Experience",
+      title: "A mobile interface designed for contextual AI.",
+      subtitle: "Vulora combines conversation, visual components and financial actions in a fluid experience. The AI interprets intent; the app executes tools and renders visual responses with control, safety and consistency.",
+      slides: {
+        overview: { alt: "Vulora app home screen", caption: "Home experience with financial health, budget context and a conversational input." },
+        insights: { alt: "Vulora insight card", caption: "Contextual insights rendered by the app, not as model-authored interface code." },
+        bills: { alt: "Upcoming bills cards in Vulora", caption: "Upcoming bills, recurring services and financial context in native visual cards." },
+        vault: { alt: "Vulora vault card", caption: "Private financial state and savings-oriented components inside the mobile UI." },
+        input: { alt: "Vulora voice and chat input", caption: "Conversation, audio input and tool-driven actions share the same mobile surface." }
       }
     },
     engineering: {
-      eyebrow: "Under the hood",
-      title: "The engineering behind the proof of concept.",
-      subtitle: "The hard part isn't the idea — it's making a local LLM fast, safe and reliable on mobile hardware. These are the problems this project solves.",
+      eyebrow: "Engineering",
+      title: "The hard part is not creating a chatbot. It is making AI act with safety, context and privacy.",
+      subtitle: "Vulora was built as a local-first architecture: model, tools, data and interface work together to deliver useful AI without giving up control.",
       cards: {
-        llm: { tag: "Gemma 4 E2B · GPU", title: "On-device inference path", text: "A ~2.6 GB Gemma 4 E2B model runs locally on the GPU via flutter_gemma — opt-in download, with image input disabled to stay clear of OOM. The same harness also routes to trusted providers on your LAN or private cloud." },
-        tools: { tag: "21 tools · Function calling", title: "An agentic tool layer", text: "21 typed tools dispatched to deterministic Dart handlers — expenses, budgets, finance queries and memory — all driven by function calling." },
-        guardrails: { tag: "Confirmations · Privacy", title: "Guardrails by design", text: "Destructive actions wait for an explicit confirmation card; private memories never go back to the model and sensitive categories are refused outright." },
-        genui: { tag: "App-owned visuals", title: "Deterministic generative UI", text: "Tools return typed visual payloads — budget and confirmation cards — rendered natively inside the chat. No model-authored JSON drives the screen." },
-        streaming: { tag: "Streaming · Context", title: "Streaming under control", text: "Real-time token streaming with reasoning traces, a mutex serializing native FFI calls, token-buffer pruning and a live context cost." },
-        storage: { tag: "Drift · Hive", title: "Offline-first persistence", text: "A relational SQLite layer (Drift, 9 tables, enforced foreign keys, money in cents) plus fast Hive key-value — all data stays in the app, on the device." },
+        llm: { tag: "Gemma · GPU · on-device", title: "Local inference", text: "A local model runs on device with opt-in download, response streaming and performance care for mobile hardware." },
+        tools: { tag: "Function calling", title: "Tool layer", text: "AI does not mutate data directly. It calls typed tools, and Dart handlers execute actions deterministically." },
+        guardrails: { tag: "Guardrails", title: "Sensitive actions with confirmation", text: "Edits, deletions and exports pass through confirmation cards before any persistent change." },
+        genui: { tag: "Generative UI", title: "App-owned visual components", text: "The interface does not depend on free-form JSON generated by the model. The app renders native components from typed payloads." },
+        streaming: { tag: "Streaming · FFI", title: "Execution control", text: "Real-time streaming, native concurrency control, context pruning and error handling keep the experience stable." },
+        storage: { tag: "Drift · Hive", title: "Local data", text: "Transactions, categories, preferences and contextual memory live on the device with local-first persistence." },
       }
     },
+    stack: {
+      eyebrow: "Stack",
+      title: "A mobile architecture for private AI.",
+      subtitle: "Vulora combines a mobile app, local LLM, offline data and pluggable providers in a modular architecture.",
+      blocks: {
+        client: { title: "Client", text: "Flutter · Dart · Provider · Custom design system · Liquid glass UI" },
+        local: { title: "Local AI", text: "Gemma · flutter_gemma · GPU backend · Streaming · Function calling" },
+        private: { title: "Private / LAN AI", text: "OpenAI-compatible endpoints · Anthropic Messages API · Custom providers · Private endpoints" },
+        data: { title: "Data Layer", text: "Drift · SQLite · Hive · Migrations · Money stored in cents" },
+        ux: { title: "UX & Product", text: "PT/EN i18n · Runtime language switching · Audio input · Confirmation cards · Generative UI" },
+        reliability: { title: "Reliability", text: "Typed tool dispatcher · FFI mutex · Token pruning · Error states · Opt-in model download" }
+      }
+    },
+    decisions: {
+      eyebrow: "Technical decisions",
+      title: "Real problems that shaped the architecture.",
+      subtitle: "Vulora is not just an interface for AI. The project required decisions about local execution, safety, persistence, streaming, UX and privacy.",
+      labels: { decision: "Decision", result: "Result" },
+      items: {
+        local: {
+          problem: "Running local AI on mobile hardware",
+          decision: "Use on-device inference with a local model, opt-in download and adjustments to reduce excessive memory risk.",
+          result: "A functional foundation for private AI without depending by default on public APIs."
+        },
+        control: {
+          problem: "Letting AI execute actions without losing control",
+          decision: "Separate model intent and app execution through typed tools and deterministic handlers.",
+          result: "The AI interprets the request; the application controls the action."
+        },
+        ui: {
+          problem: "Creating generative UI without handing the screen to the model",
+          decision: "Render native visual components from typed payloads.",
+          result: "The experience feels generative while staying predictable, safe and consistent."
+        }
+      }
+    },
+    roadmap: {
+      eyebrow: "Roadmap",
+      title: "Where Vulora is today — and where it is going.",
+      subtitle: "Vulora is an application in continuous development. The AI foundation, local data, tools and mobile experience already exist; the next steps deepen financial intelligence, UX and reliability.",
+      phase0: { label: "Phase 0 · Completed", title: "AI foundation and tool calling", text: "AI chat, streaming, initial tools, theme control, calculator, financial transactions and conversation reset." },
+      phase1: { label: "Phase 1 · Completed", title: "Persistence and financial domain", text: "Drift, Hive, categories, transactions, budgets, export, private memory and local data." },
+      phase2: { label: "Phase 2 · Completed", title: "Mobile experience and design system", text: "Glass interface, brand splash, visual components, rich empty state, carousels, cards and consistent visual system." },
+      current: { label: "Current phase", title: "Product refinement and public case study", text: "Landing page, demo, technical narrative, positioning clarity and case preparation for portfolio use." },
+      next: { label: "Next steps", title: "Deeper financial intelligence", text: "Financial summary, advanced aggregations, month-over-month comparisons, audio improvements, proactive disambiguation and context indicators." }
+    },
     privacy: {
-      eyebrow: "Private by design",
-      title: "Privacy is an architecture decision, not a feature.",
-      text: "Vulora is built to minimize cloud dependency, keep context on the device and make personal finance feel fast, quiet and trustworthy — privacy designed into the system, not bolted on.",
+      eyebrow: "Privacy",
+      title: "Privacy is not added at the end. It shapes the architecture.",
+      text: "In Vulora, financial data, preferences, history and context are designed to stay close to the user. Cloud can be used when it makes sense, but it is not the mandatory starting point.",
       cards: {
-        sensitive: { title: "Sensitive by nature", text: "Money data deserves clear boundaries and careful handling." },
-        cloud: { title: "Less cloud reliance", text: "Local-first intelligence, with the cloud used only when it's genuinely the right tool." },
-        offline: { title: "Fast and contextual", text: "Designed for an offline-first experience that understands your context." }
+        sensitive: { title: "Local data", text: "Sensitive information stays on the device whenever possible." },
+        cloud: { title: "Cloud as an option", text: "The architecture supports trusted providers without depending on public cloud by default." },
+        offline: { title: "User control", text: "Model download, provider usage and sensitive actions are explicit decisions." }
       }
     },
     contact: {
       eyebrow: "The engineer",
-      title: "A proof of concept, built in the open mind.",
-      text: "Vulora started as a personal itch — a real problem I wanted to solve well — and became a deep dive into edge AI: a custom harness with guardrails and tooling, a private benchmark to choose a base model for fine-tuning, and a local-first architecture with pluggable inference — on-device, LAN, or private cloud. No launch, no pitch. Just the engineering, in public view.",
-      note: "If you work on mobile architecture, applied AI or edge inference, let's have a chat.",
+      title: "Built like a product. Documented as a case study.",
+      text: "I am a fullstack engineer, and I created Vulora to explore a technical and product question: what would a truly private financial assistant look like if it could combine local AI, offline data and a modern mobile experience?",
+      text2: "The project brings together Flutter architecture, local LLM inference, tool calling, offline persistence, i18n, streaming, design system, guardrails and a product vision applied to a sensitive domain: personal finance.",
+      note: "If you work with mobile architecture, applied AI, fintech, privacy or local inference, let's talk.",
       site: "Personal site",
-      x: "Profile on X"
+      linkedin: "Connect on LinkedIn",
+      github: "View GitHub"
     },
     faq: {
       eyebrow: "FAQ",
       title: "Clear answers, no hype.",
       items: {
-        what: { q: "What is Vulora?", a: "A proof of concept and engineering case study: a private financial-intelligence app with on-device inference by default, and the option to route it to trusted providers you configure — a model on your LAN (e.g. your MacBook), at home, or in a private cloud." },
-        stack: { q: "What's the stack?", a: "Flutter and Dart on the client, a pluggable inference layer (on-device Gemma by default, or trusted providers on your LAN or private cloud) behind a custom harness with guardrails and tooling, and a local-first data layer (Drift / Hive)." },
-        why: { q: "Why run local models?", a: "Because sensitive financial data shouldn't have to pass through third-party clouds. Local inference — on the device, your LAN, or a private endpoint you trust — makes privacy an architectural guarantee instead of a policy promise." },
-        available: { q: "Can I download it?", a: "Not yet — Vulora is a work-in-progress POC, not a publicly released product. It exists to demonstrate the engineering, not to sell anything." },
-        bank: { q: "Is Vulora a bank or financial advice?", a: "No. Vulora is not a bank, financial institution, broker or investment adviser, and nothing here is financial, legal, accounting or tax advice." }
+        what: { q: "What is Vulora?", a: "Vulora is a functional application and technical case study about private financial AI. It combines Flutter, local-first AI, offline data, tool calling and a modern mobile interface to explore how financial assistants can work without depending by default on public clouds." },
+        available: { q: "Is Vulora available for download?", a: "Not yet. Vulora is in development and exists today as a functional proof of concept and technical case study." },
+        why: { q: "Why run local models?", a: "Because financial data is sensitive. Running AI locally, on a local network or on trusted private endpoints reduces reliance on public clouds and makes privacy an architectural decision." },
+        stack: { q: "What's the stack?", a: "Flutter and Dart on the client, local model support with Gemma/flutter_gemma, a pluggable inference layer, typed tools, local persistence with Drift/SQLite and Hive, PT/EN i18n and a custom design system." },
+        bank: { q: "Is Vulora a bank or financial advice?", a: "No. Vulora is not a bank, financial institution, broker, investment adviser or financial advice. The project is a technical software and applied AI study." },
+        cloud: { q: "Does the app use cloud?", a: "The proposal is local-first. Cloud can be used as an option, especially through private endpoints or trusted providers configured by the user, but it is not the mandatory default." }
       }
     },
     footer: {
@@ -193,89 +278,154 @@ const translations = {
   },
   "pt-BR": {
     meta: {
-      title: "Vulora — IA on-device, um estudo de caso de engenharia",
-      description: "A Vulora é uma prova de conceito de inteligência financeira privada com inferência local-first — no dispositivo, na sua rede local ou em endpoints privados de confiança — um estudo de caso de engenharia em IA offline-first e privacy-first, construído em Flutter.",
-      ogTitle: "Vulora — IA on-device, um estudo de caso de engenharia",
-      ogDescription: "A Vulora é uma prova de conceito de inteligência financeira privada com inferência local-first — no dispositivo, na sua rede local ou em endpoints privados de confiança — um estudo de caso de engenharia em IA offline-first e privacy-first, construído em Flutter.",
-      twitterTitle: "Vulora — IA on-device, um estudo de caso de engenharia",
-      twitterDescription: "A Vulora é uma prova de conceito de inteligência financeira privada com inferência local-first — no dispositivo, na sua rede local ou em endpoints privados de confiança — um estudo de caso de engenharia em IA offline-first e privacy-first, construído em Flutter."
+      title: "Vulora — IA financeira privada",
+      description: "Aplicação Flutter funcional e estudo de caso sobre IA financeira privada, inferência local-first, dados offline e arquitetura mobile.",
+      ogTitle: "Vulora — IA financeira privada, local-first e Flutter",
+      ogDescription: "Um estudo de caso técnico sobre como criar um assistente financeiro com IA local, dados offline, tool calling e privacidade por arquitetura.",
+      twitterTitle: "Vulora — IA financeira privada",
+      twitterDescription: "Aplicação Flutter funcional e estudo de caso sobre IA financeira privada, inferência local-first, dados offline e arquitetura mobile."
     },
-    nav: { thesis: "Tese", showcase: "App", engineering: "Engenharia", privacy: "Privacidade", faq: "FAQ", contact: "Falar comigo" },
+    nav: { demo: "Demo", product: "Produto", features: "Features", architecture: "Arquitetura", roadmap: "Roadmap", about: "Sobre", contact: "Falar comigo" },
     hero: {
-      badge: "Estudo de caso de engenharia · IA local-first · Flutter",
-      title: "Inteligência financeira sob seu controle.",
-      subtitle: "Uma prova de conceito com inferência on-device por padrão — ou direcionada para provedores confiáveis na sua rede local ou nuvem privada. IA offline-first e contextual que nunca entrega seus dados a nuvens de terceiros.",
-      primaryCta: "Explorar a construção",
-      secondaryCta: "Ver demo",
-      videoLabel: "Assistir vídeo de apresentação"
+      badge: "Estudo de caso técnico · IA local-first · Flutter",
+      title: "Inteligência financeira privada, rodando onde seus dados vivem.",
+      subtitle: "Vulora é uma aplicação Flutter funcional que explora IA financeira local-first: on-device, na rede local ou em nuvem privada confiável. Um estudo de caso em edge AI, privacidade por arquitetura e experiência mobile moderna.",
+      primaryCta: "Ver demonstração",
+      secondaryCta: "Explorar arquitetura",
+      tertiaryCta: "Assistir apresentação"
     },
-    mockup: {
-      user: "Posso gastar menos este mês?",
-      ai: "Sim. Assinaturas subiram 18%. Encontrei três economias discretas.",
-      metric: "Insight privado",
-      metricValue: "−18% assinaturas"
+    problem: {
+      eyebrow: "O problema",
+      title: "Dados financeiros são sensíveis demais para dependerem, por padrão, de nuvens públicas.",
+      text: "Um bom assistente financeiro precisa conhecer o seu contexto: histórico, hábitos e decisões do dia a dia. Só que, quanto mais ele ajuda, mais dados sensíveis precisa acessar — e, no modelo tradicional, isso significa enviar suas finanças para servidores de terceiros. A Vulora parte de outra ideia: e se essa inteligência rodasse no seu próprio dispositivo, junto dos dados, em vez de mandá-los para fora?"
     },
-    showcase: {
-      eyebrow: "Dentro da POC",
-      title: "Uma interface generativa, renderizada no dispositivo.",
-      subtitle: "Uma interface escura em liquid glass onde o modelo compõe componentes efêmeros em tempo real — conversacional, contextual e livre de nuvens de terceiros.",
-      slides: {
-        overview: {
-          alt: "Tela inicial do app Vulora",
-          caption: "UI generativa, composta no dispositivo."
-        }
+    product: {
+      eyebrow: "O produto",
+      title: "Uma IA financeira privada em formato de app conversacional.",
+      text: "A Vulora é um app financeiro experimental que combina conversa com IA, tools determinísticas e dados locais para ajudar o usuário a registrar gastos, consultar transações, entender orçamento e receber insights financeiros sem depender, por padrão, de serviços de IA em nuvem pública.",
+      note: "Ela ainda não é um produto lançado. É uma aplicação funcional em desenvolvimento e um estudo de caso técnico sobre IA local-first aplicada a finanças pessoais.",
+      status: {
+        prototype: "Protótipo funcional",
+        ai: "IA local-first",
+        tools: "21+ tools",
+        i18n: "PT/EN",
+        offline: "Dados offline-first"
       }
     },
-    thesis: {
-      eyebrow: "A premissa",
-      title: "Enviar dados financeiros sensíveis para nuvens de terceiros não deveria ser o padrão da indústria.",
-      subtitle: "A Vulora é a resposta técnica a essa premissa: uma camada de inteligência local-first — no dispositivo, na sua rede local ou em um endpoint privado de confiança — que mantém contexto e dados com você e trata nuvens de terceiros como opcionais, não obrigatórias.",
+    current: {
+      eyebrow: "Estado atual",
+      title: "O que já funciona na Vulora.",
+      subtitle: "A Vulora ainda está em desenvolvimento, mas já possui uma base funcional com IA, tools financeiras, persistência local e interface mobile.",
       cards: {
-        local: { title: "Local por padrão", text: "A inferência roda onde você escolher — no dispositivo, na sua rede doméstica ou em um endpoint privado de confiança — sem rotear seu dinheiro por APIs públicas." },
-        offline: { title: "Arquitetura offline-first", text: "Contexto e histórico ficam com você. O app continua útil com ou sem rede." },
-        sovereign: { title: "Soberania de dados", text: "Privacidade como decisão de arquitetura, não um checkbox — dados sensíveis nunca precisam sair do dispositivo." }
+        assistant: { title: "Assistente financeiro conversacional", text: "Converse em linguagem natural para registrar gastos, consultar informações financeiras e interagir com o app por meio de IA." },
+        tools: { title: "21+ tools funcionais", text: "Camada de tools tipadas para gastos, orçamentos, transações, categorias, memória privada, idioma, moeda, tema e exportação." },
+        inference: { title: "Inferência local-first", text: "Execução on-device com modelo local, com opção de direcionamento para provedores confiáveis na rede local ou em nuvem privada." },
+        persistence: { title: "Persistência offline", text: "Dados financeiros e preferências vivem no dispositivo, com arquitetura baseada em SQLite/Drift e Hive." },
+        ui: { title: "UI generativa determinística", text: "O modelo aciona tools, mas o app renderiza os componentes visuais de forma nativa e previsível." },
+        confirmation: { title: "Confirmações para ações sensíveis", text: "Edições, exclusões e exportações exigem confirmação explícita antes de alterar dados do usuário." }
+      }
+    },
+    showcase: {
+      eyebrow: "Experiência",
+      title: "Uma interface mobile pensada para IA contextual.",
+      subtitle: "A Vulora combina conversa, componentes visuais e ações financeiras em uma experiência fluida. A IA interpreta a intenção; o app executa tools e renderiza respostas visuais com controle, segurança e consistência.",
+      slides: {
+        overview: { alt: "Tela inicial do app Vulora", caption: "Home com saúde financeira, contexto de orçamento e entrada conversacional." },
+        insights: { alt: "Card de insight da Vulora", caption: "Insights contextuais renderizados pelo app, não como interface escrita pelo modelo." },
+        bills: { alt: "Cards de próximas contas na Vulora", caption: "Próximas contas, serviços recorrentes e contexto financeiro em cards nativos." },
+        vault: { alt: "Card Vulora Vault", caption: "Estado financeiro privado e componentes de economia dentro da UI mobile." },
+        input: { alt: "Entrada de voz e chat da Vulora", caption: "Conversa, áudio e ações via tools compartilham a mesma superfície mobile." }
       }
     },
     engineering: {
-      eyebrow: "Por baixo dos panos",
-      title: "A engenharia por trás da prova de conceito.",
-      subtitle: "O difícil não é a ideia — é fazer um LLM local ser rápido, seguro e confiável em hardware móvel. Estes são os problemas que este projeto resolve.",
+      eyebrow: "Engenharia",
+      title: "O difícil não é criar um chatbot. É fazer a IA agir com segurança, contexto e privacidade.",
+      subtitle: "A Vulora foi construída como uma arquitetura local-first: modelo, tools, dados e interface trabalham juntos para entregar uma experiência de IA útil sem abrir mão do controle.",
       cards: {
-        llm: { tag: "Gemma 4 E2B · GPU", title: "Caminho de inferência on-device", text: "Um modelo Gemma 4 E2B de ~2.6 GB roda localmente na GPU via flutter_gemma — download opt-in e entrada de imagem desativada para evitar OOM. O mesmo harness também direciona para provedores confiáveis na sua rede local ou nuvem privada." },
-        tools: { tag: "21 tools · Function calling", title: "Uma camada de tools agentic", text: "21 tools tipadas despachadas para handlers Dart determinísticos — gastos, orçamentos, consultas financeiras e memória — tudo via function calling." },
-        guardrails: { tag: "Confirmações · Privacidade", title: "Guardrails por design", text: "Ações destrutivas esperam um card de confirmação explícito; memórias privadas nunca voltam ao modelo e categorias sensíveis são recusadas de imediato." },
-        genui: { tag: "Visuais do app", title: "Generative UI determinística", text: "As tools retornam payloads visuais tipados — cards de orçamento e confirmação — renderizados nativamente no chat. Sem JSON do modelo conduzindo a tela." },
-        streaming: { tag: "Streaming · Contexto", title: "Streaming sob controle", text: "Streaming de tokens em tempo real com traços de raciocínio, um mutex serializando chamadas FFI nativas, poda por token-buffer e custo de contexto ao vivo." },
-        storage: { tag: "Drift · Hive", title: "Persistência offline-first", text: "Uma camada SQLite relacional (Drift, 9 tabelas, foreign keys garantidas, dinheiro em centavos) mais Hive key-value rápido — todos os dados ficam no app, no dispositivo." },
+        llm: { tag: "Gemma · GPU · on-device", title: "Inferência local", text: "Modelo local rodando no dispositivo, com download opt-in, streaming de respostas e cuidados de performance para hardware móvel." },
+        tools: { tag: "Function calling", title: "Camada de tools", text: "A IA não altera dados diretamente. Ela aciona tools tipadas, e handlers Dart executam ações de forma determinística." },
+        guardrails: { tag: "Guardrails", title: "Ações sensíveis com confirmação", text: "Edição, exclusão e exportação passam por cards de confirmação antes de qualquer mudança persistente." },
+        genui: { tag: "Generative UI", title: "Componentes visuais do app", text: "A interface não depende de JSON livre gerado pelo modelo. O app renderiza componentes nativos a partir de payloads tipados." },
+        streaming: { tag: "Streaming · FFI", title: "Controle de execução", text: "Streaming em tempo real, controle de concorrência nativa, poda de contexto e tratamento de erros para manter a experiência estável." },
+        storage: { tag: "Drift · Hive", title: "Dados locais", text: "Transações, categorias, preferências e memória contextual vivem no dispositivo, com persistência local-first." },
       }
     },
+    stack: {
+      eyebrow: "Stack",
+      title: "Uma arquitetura mobile para IA privada.",
+      subtitle: "A Vulora combina app mobile, LLM local, dados offline e providers plugáveis em uma arquitetura modular.",
+      blocks: {
+        client: { title: "Client", text: "Flutter · Dart · Provider · Design system próprio · Liquid glass UI" },
+        local: { title: "Local AI", text: "Gemma · flutter_gemma · GPU backend · Streaming · Function calling" },
+        private: { title: "Private / LAN AI", text: "OpenAI-compatible endpoints · Anthropic Messages API · Custom providers · Private endpoints" },
+        data: { title: "Data Layer", text: "Drift · SQLite · Hive · Migrations · Dinheiro em centavos" },
+        ux: { title: "UX & Product", text: "i18n PT/EN · Troca de idioma em runtime · Entrada de áudio · Cards de confirmação · Generative UI" },
+        reliability: { title: "Reliability", text: "Dispatcher tipado de tools · Mutex FFI · Poda de tokens · Estados de erro · Download opt-in do modelo" }
+      }
+    },
+    decisions: {
+      eyebrow: "Decisões técnicas",
+      title: "Problemas reais que moldaram a arquitetura.",
+      subtitle: "A Vulora não é só uma interface para IA. O projeto exigiu decisões sobre execução local, segurança, persistência, streaming, UX e privacidade.",
+      labels: { decision: "Decisão", result: "Resultado" },
+      items: {
+        local: {
+          problem: "Rodar IA local em hardware móvel",
+          decision: "Usar inferência on-device com modelo local, download opt-in e ajustes para reduzir risco de consumo excessivo de memória.",
+          result: "Uma base funcional para IA privada sem depender, por padrão, de APIs públicas."
+        },
+        control: {
+          problem: "Permitir que a IA execute ações sem perder controle",
+          decision: "Separar intenção do modelo e execução do app por meio de tools tipadas e handlers determinísticos.",
+          result: "A IA interpreta o pedido; o aplicativo controla a ação."
+        },
+        ui: {
+          problem: "Criar UI generativa sem entregar a tela ao modelo",
+          decision: "Renderizar componentes visuais nativos a partir de payloads tipados.",
+          result: "A experiência parece generativa, mas permanece previsível, segura e consistente."
+        }
+      }
+    },
+    roadmap: {
+      eyebrow: "Roadmap",
+      title: "Onde a Vulora está hoje — e para onde está indo.",
+      subtitle: "A Vulora é uma aplicação em desenvolvimento contínuo. A base de IA, dados locais, tools e experiência mobile já existe; os próximos passos aprofundam inteligência financeira, UX e confiabilidade.",
+      phase0: { label: "Fase 0 · Concluída", title: "Base de IA e tool calling", text: "Chat com IA, streaming, tools iniciais, controle de tema, calculadora, transações financeiras e reset de conversa." },
+      phase1: { label: "Fase 1 · Concluída", title: "Persistência e domínio financeiro", text: "Drift, Hive, categorias, transações, orçamentos, exportação, memória privada e dados locais." },
+      phase2: { label: "Fase 2 · Concluída", title: "Experiência mobile e design system", text: "Interface glass, splash de marca, componentes visuais, empty state rica, carrosséis, cartões e sistema visual consistente." },
+      current: { label: "Fase atual", title: "Refinamento de produto e demonstração pública", text: "Landing page, demo, narrativa técnica, clareza de posicionamento e preparação do case para portfólio." },
+      next: { label: "Próximos passos", title: "Inteligência financeira mais profunda", text: "Resumo financeiro, agregações avançadas, comparação mês a mês, melhorias no áudio, desambiguação proativa e indicadores de contexto." }
+    },
     privacy: {
-      eyebrow: "Privacidade por design",
-      title: "Privacidade é decisão de arquitetura, não uma funcionalidade.",
-      text: "A Vulora é construída para minimizar dependência da nuvem, manter o contexto no dispositivo e tornar finanças pessoais rápidas, silenciosas e confiáveis — privacidade desenhada no sistema, não acoplada depois.",
+      eyebrow: "Privacidade",
+      title: "Privacidade não entra no final. Ela define a arquitetura.",
+      text: "Na Vulora, dados financeiros, preferências, histórico e contexto foram pensados para viver próximos ao usuário. A nuvem pode ser usada quando fizer sentido, mas não é o ponto de partida obrigatório.",
       cards: {
-        sensitive: { title: "Sensível por natureza", text: "Dados sobre dinheiro merecem limites claros e cuidado no tratamento." },
-        cloud: { title: "Menos dependência da nuvem", text: "Inteligência local-first, com a nuvem usada só quando ela é realmente a ferramenta certa." },
-        offline: { title: "Rápida e contextual", text: "Projetada para uma experiência offline-first que entende seu contexto." }
+        sensitive: { title: "Dados locais", text: "Informações sensíveis permanecem no dispositivo sempre que possível." },
+        cloud: { title: "Nuvem como opção", text: "A arquitetura permite provedores confiáveis, mas não depende de nuvem pública por padrão." },
+        offline: { title: "Controle do usuário", text: "Download do modelo, uso de providers e ações sensíveis são decisões explícitas." }
       }
     },
     contact: {
       eyebrow: "O engenheiro",
-      title: "Uma prova de conceito, construída de mente aberta.",
-      text: "A Vulora nasceu de uma dor pessoal — um problema real que eu queria resolver bem — e virou um mergulho profundo em edge AI: um harness próprio com guardrails e tooling, um benchmark privado para escolher um modelo base para fine-tuning e uma arquitetura local-first com inferência plugável — on-device, na rede local ou em nuvem privada. Sem lançamento, sem pitch. Só a engenharia, à vista de todos.",
-      note: "Se você trabalha com arquitetura mobile, IA aplicada ou inferência na borda, vamos bater um papo.",
+      title: "Construído como produto. Documentado como estudo de caso.",
+      text: "Sou fullstack engineer e criei a Vulora para explorar uma pergunta técnica e de produto: como seria um assistente financeiro realmente privado, capaz de usar IA local, dados offline e uma experiência mobile moderna?",
+      text2: "O projeto reúne arquitetura Flutter, LLM local, tool calling, persistência offline, i18n, streaming, design system, guardrails e uma visão de produto aplicada a um domínio sensível: finanças pessoais.",
+      note: "Se você trabalha com mobile architecture, IA aplicada, fintech, privacidade ou inferência local, vamos conversar.",
       site: "Site pessoal",
-      x: "Perfil no X"
+      linkedin: "Conectar no LinkedIn",
+      github: "Ver GitHub"
     },
     faq: {
       eyebrow: "FAQ",
       title: "Respostas claras, sem hype.",
       items: {
-        what: { q: "O que é a Vulora?", a: "Uma prova de conceito e estudo de caso de engenharia: um app de inteligência financeira privada com inferência on-device por padrão, e opção de direcionar para provedores confiáveis que você configura — um modelo na sua rede local (por exemplo, no MacBook), em casa ou em uma nuvem privada." },
-        stack: { q: "Qual é a stack?", a: "Flutter e Dart no cliente, uma camada de inferência plugável (Gemma on-device por padrão, ou provedores confiáveis na sua rede local ou nuvem privada) atrás de um harness próprio com guardrails e tooling, e uma camada de dados local-first (Drift / Hive)." },
-        why: { q: "Por que rodar modelos locais?", a: "Porque dados financeiros sensíveis não deveriam precisar passar por nuvens de terceiros. Inferência local — no dispositivo, na sua rede ou em um endpoint privado de confiança — torna a privacidade uma garantia de arquitetura, não uma promessa de política." },
-        available: { q: "Posso baixar?", a: "Ainda não — a Vulora é uma POC em andamento, não um produto lançado publicamente. Ela existe para demonstrar a engenharia, não para vender nada." },
-        bank: { q: "A Vulora é um banco ou aconselhamento financeiro?", a: "Não. A Vulora não é banco, instituição financeira, corretora ou consultoria de investimentos, e nada aqui é aconselhamento financeiro, jurídico, contábil ou tributário." }
+        what: { q: "O que é a Vulora?", a: "A Vulora é uma aplicação funcional e um estudo de caso técnico sobre IA financeira privada. Ela combina Flutter, IA local-first, dados offline, tool calling e uma interface mobile moderna para explorar como assistentes financeiros podem funcionar sem depender, por padrão, de nuvens públicas." },
+        available: { q: "A Vulora já está disponível para download?", a: "Ainda não. A Vulora está em desenvolvimento e existe hoje como uma prova de conceito funcional e case técnico." },
+        why: { q: "Por que rodar IA localmente?", a: "Porque dados financeiros são sensíveis. Rodar IA localmente, na rede local ou em endpoints privados confiáveis reduz dependência de nuvens públicas e torna a privacidade uma decisão de arquitetura." },
+        stack: { q: "Qual é a stack?", a: "Flutter e Dart no cliente, modelo local com Gemma/flutter_gemma, camada de inferência plugável, tools tipadas, persistência local com Drift/SQLite e Hive, i18n PT/EN e design system próprio." },
+        bank: { q: "A Vulora é banco, corretora ou consultoria financeira?", a: "Não. A Vulora não é banco, instituição financeira, corretora, consultoria de investimentos ou aconselhamento financeiro. O projeto é um estudo técnico de software e IA aplicada." },
+        cloud: { q: "O app usa nuvem?", a: "A proposta é local-first. A nuvem pode ser usada como opção, especialmente em endpoints privados ou provedores confiáveis configurados pelo usuário, mas não é o padrão obrigatório." }
       }
     },
     footer: {
@@ -467,7 +617,7 @@ function initReveal() {
   if (!hidden.length) return;
 
   const staggerSet = new Set(
-    document.querySelectorAll(".card-grid .reveal, .privacy-list .reveal, .faq-list .reveal, .countdown .reveal")
+    document.querySelectorAll(".card-grid .reveal, .stack-grid .reveal, .decision-grid .reveal, .roadmap-grid .reveal, .privacy-list .reveal, .faq-list .reveal, .countdown .reveal")
   );
 
   const observer = new IntersectionObserver((entries) => {
@@ -586,31 +736,15 @@ function initCookies() {
 
 /* ----------------------------------------------------------- misc */
 
-function initDemoButton() {
-  const button = document.querySelector("[data-demo-button]");
-  if (!button) return;
-
-  const DEMO_SCROLL_EXTRA = 100;
-
-  button.addEventListener("click", () => {
-    const target = document.querySelector("#showcase") || document.querySelector(".device");
-    if (!target) return;
-
-    const rect = target.getBoundingClientRect();
-    const centeredTop = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-    window.scrollTo({ top: Math.max(0, centeredTop + DEMO_SCROLL_EXTRA), behavior: "smooth" });
-  });
-}
-
 function initVideoModal() {
-  const trigger = document.querySelector("[data-video-modal-trigger]");
+  const triggers = document.querySelectorAll("[data-video-modal-trigger]");
   const modal = document.querySelector("[data-video-modal]");
   const iframe = modal?.querySelector("[data-video-modal-iframe]");
   const videoId = parseYouTubeId(YOUTUBE_PRESENTATION_ID);
 
-  if (!trigger || !modal || !iframe || !videoId) return;
+  if (!triggers.length || !modal || !iframe || !videoId) return;
 
-  trigger.hidden = false;
+  triggers.forEach((trigger) => { trigger.hidden = false; });
   let lastFocus = null;
 
   function closeModal() {
@@ -634,7 +768,7 @@ function initVideoModal() {
     modal.querySelector(".video-modal__close")?.focus();
   }
 
-  trigger.addEventListener("click", openModal);
+  triggers.forEach((trigger) => trigger.addEventListener("click", openModal));
 
   modal.querySelector(".video-modal__close")?.addEventListener("click", closeModal);
 
@@ -779,7 +913,6 @@ initReveal();
 initParallax();
 initMagnetic();
 initCookies();
-initDemoButton();
 initVideoModal();
 initShowcaseCarousel();
 initHeaderScrolled();

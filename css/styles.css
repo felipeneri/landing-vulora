@@ -222,9 +222,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.14;
+  /* Normal blending (no mix-blend-mode): blend modes force the whole viewport
+     to flatten together with the cards' backdrop-filter, which produced a
+     "ghost" blurred rectangle over the cards on hover and was expensive to
+     composite. Opacity dialed down to keep the grain subtle without the blend. */
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  mix-blend-mode: soft-light;
 }
 
 .site-shell > main,
@@ -232,6 +235,13 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .site-shell > aside {
   position: relative;
   z-index: 1;
+}
+
+/* Composite main as its own isolated group, separate from the fixed
+   soft-light noise behind it — keeps card backdrop-filters from flattening
+   against that page-wide blend layer. */
+.site-shell > main {
+  isolation: isolate;
 }
 
 .container {
@@ -447,7 +457,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   align-items: center;
   gap: 10px;
   padding: 9px 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   color: var(--text-secondary);
   font-size: 0.875rem;
   cursor: pointer;
@@ -493,7 +503,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   outline: none;
 }
 
-.button:active { transform: translateY(0) scale(0.99); }
+.button:active { transform: translateY(0) scale(0.96); }
 
 .button-primary {
   color: #04130d;
@@ -700,6 +710,7 @@ h1 {
   line-height: 1.01;
   font-weight: 700;
   letter-spacing: -0.038em;
+  text-wrap: balance;
 }
 
 h2 {
@@ -708,6 +719,7 @@ h2 {
   line-height: 1.06;
   font-weight: 700;
   letter-spacing: -0.032em;
+  text-wrap: balance;
 }
 
 h3 {
@@ -715,6 +727,7 @@ h3 {
   line-height: 1.26;
   font-weight: 600;
   letter-spacing: -0.012em;
+  text-wrap: balance;
 }
 
 .hero-subtitle {
@@ -725,6 +738,7 @@ h3 {
   line-height: 1.55;
   letter-spacing: -0.008em;
   font-weight: 400;
+  text-wrap: pretty;
 }
 
 .section-copy {
@@ -733,6 +747,7 @@ h3 {
   font-size: 1.08rem;
   line-height: 1.62;
   letter-spacing: -0.008em;
+  text-wrap: pretty;
 }
 
 .cta-row {
@@ -759,6 +774,8 @@ h3 {
   height: 18px;
   fill: currentColor;
   stroke: none;
+  /* play triangle reads left-heavy when geometrically centred — nudge right */
+  transform: translateX(1px);
 }
 
 /* ----------------------------------------------------------- video modal */
@@ -828,6 +845,7 @@ body.modal-open {
 }
 
 .video-modal__close {
+  position: relative;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -852,6 +870,13 @@ body.modal-open {
   border-color: rgba(255, 255, 255, 0.18);
   transform: scale(1.05);
   outline: none;
+}
+
+/* extend the 36px visible control to a 44px tap target */
+.video-modal__close::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
 }
 
 .video-modal__close svg {
@@ -935,7 +960,44 @@ body.modal-open {
   isolation: isolate;
 }
 
-/* Alternate film grain: thesis, engineering, contact */
+.product-copy {
+  display: grid;
+  gap: 18px;
+  color: var(--text-secondary);
+  font-size: 1.04rem;
+  line-height: 1.66;
+  text-wrap: pretty;
+}
+
+/* even two-column checklist — avoids a lone pill orphaned on its own row */
+.status-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 14px 32px;
+  margin-top: 26px;
+}
+
+.status-strip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.004em;
+}
+
+.status-strip span::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px rgba(109, 240, 176, 0.7);
+}
+
+/* Alternate film grain for long narrative sections. */
 main > section:nth-of-type(even)::before {
   content: "";
   position: absolute;
@@ -944,8 +1006,9 @@ main > section:nth-of-type(even)::before {
   background-image: var(--noise-image);
   background-repeat: repeat;
   background-size: 240px 240px;
+  /* Normal blending — see .site-shell::before. Avoids flattening the section
+     together with the cards' backdrop-filter (the hover "ghost" rectangle). */
   opacity: var(--noise-opacity);
-  mix-blend-mode: soft-light;
   pointer-events: none;
 }
 
@@ -962,9 +1025,163 @@ main > section:nth-of-type(even) > * {
 
 .three { grid-template-columns: repeat(3, 1fr); }
 
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 58px;
+}
+
+/* double class beats the later `.glass-card { min-height: 220px }` so the
+   cards hug their content instead of leaving a tall empty band below the text */
+.stack-card.glass-card {
+  min-height: 0;
+  padding: 26px;
+}
+
+.stack-card h3 {
+  color: var(--text);
+  letter-spacing: -0.012em;
+}
+
+.stack-card p {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: var(--border-hairline);
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* technical decisions — centered card grid */
+.decision-grid {
+  margin-top: 58px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.decision-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.decision-card h3 {
+  font-size: 1.16rem;
+  letter-spacing: -0.02em;
+}
+
+.decision-card__grid {
+  display: grid;
+  gap: 18px;
+  margin-top: auto;
+}
+
+.decision-card__grid p {
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.decision-card__grid strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--cyan);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 58px;
+}
+
+.roadmap-card {
+  position: relative;
+  min-height: 238px;
+  padding: 24px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.028);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    var(--shadow-inset);
+}
+
+.roadmap-card::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.roadmap-card.is-done::before {
+  background: var(--green);
+  box-shadow: 0 0 18px rgba(109, 240, 176, 0.5);
+}
+
+.roadmap-card.is-current {
+  background:
+    var(--accent-soft),
+    rgba(255, 255, 255, 0.04);
+  box-shadow:
+    0 0 0 1px rgba(91, 215, 240, 0.22),
+    var(--shadow-sm),
+    var(--shadow-inset);
+}
+
+.roadmap-card.is-current::before {
+  background: var(--cyan);
+  box-shadow: 0 0 20px rgba(91, 215, 240, 0.58);
+}
+
+.roadmap-card span {
+  display: block;
+  max-width: calc(100% - 22px);
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.roadmap-card h3 {
+  margin-top: 18px;
+  font-size: 1rem;
+}
+
+.roadmap-card p {
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.56;
+  text-wrap: pretty;
+}
+
+.contact-section {
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 108%, rgba(91, 215, 240, 0.08), transparent 64%),
+    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.012));
+}
+
 /* reusable glass card */
 .glass-card {
   position: relative;
+  /* Own stacking context so the backdrop-filter is composited in isolation and
+     cannot flatten with the page-wide mix-blend-mode noise layers — that
+     flattening is what made the blur "ghost" across the whole section on hover
+     (and made hovering/scrolling expensive). */
+  isolation: isolate;
   border: var(--border-hairline);
   border-radius: var(--radius-lg);
   background:
@@ -994,6 +1211,7 @@ details p,
   color: var(--text-secondary);
   line-height: 1.58;
   letter-spacing: -0.005em;
+  text-wrap: pretty;
 }
 
 .card-icon {
@@ -1078,6 +1296,10 @@ details p,
   line-height: 1.66;
 }
 
+.contact-lead--secondary {
+  margin-top: 16px;
+}
+
 .contact-note {
   margin-top: 18px;
   color: var(--text) !important;
@@ -1119,6 +1341,10 @@ details p,
 
 .showcase-slide {
   flex: 0 0 100%;
+  /* <figure> carries a UA default margin: 0 40px — left unreset it makes each
+     slide wider than the track, so translateX(-100%) drifts the active slide
+     further right on every step. Zero it so a step lands exactly on the slide. */
+  margin: 0;
   display: grid;
   justify-items: center;
   gap: 22px;
@@ -1195,6 +1421,7 @@ details p,
 }
 
 .showcase-dot {
+  position: relative;
   width: 8px;
   height: 8px;
   padding: 0;
@@ -1203,6 +1430,18 @@ details p,
   background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: width var(--transition), background var(--transition);
+}
+
+/* Extend the tap target to a comfortable height without overlapping the
+   neighbouring dot — the row gap is 8px, so 4px of bleed each side is safe. */
+.showcase-dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  right: -4px;
+  height: 40px;
+  transform: translateY(-50%);
 }
 
 .showcase-dot.is-active {
@@ -1516,6 +1755,8 @@ html:not(.motion-ready) .cookie-banner.visible {
 @media (max-width: 980px) {
   .hero-grid { gap: 56px; }
   .split { gap: 48px; }
+  .roadmap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .roadmap-card:last-child { grid-column: 1 / -1; }
 }
 
 @media (max-width: 900px) {
@@ -1542,7 +1783,8 @@ html:not(.motion-ready) .cookie-banner.visible {
   }
 
   .hero-grid,
-  .split {
+  .split,
+  .decision-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1551,6 +1793,7 @@ html:not(.motion-ready) .cookie-banner.visible {
   .device-mockup { width: min(280px, 68vw); }
 
   .three,
+  .stack-grid,
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -1607,23 +1850,50 @@ html:not(.motion-ready) .cookie-banner.visible {
 
   .nav-links::-webkit-scrollbar { display: none; }
 
-  h1 { font-size: clamp(2.6rem, 15vw, 4rem); }
+  .badge {
+    max-width: 100%;
+    align-items: flex-start;
+    font-size: 0.62rem;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .badge::before {
+    margin-top: 0.28em;
+  }
+
+  h1 {
+    font-size: 2.08rem;
+    line-height: 1.12;
+    overflow-wrap: break-word;
+  }
 
   .hero {
-    padding-top: calc(var(--header-float-top) + var(--header-float-height) + 120px);
+    padding-top: calc(var(--header-float-top) + var(--header-float-height) + 56px);
     padding-bottom: 80px;
   }
 
   .hero-grid { gap: 52px; }
 
   .three,
+  .stack-grid,
+  .roadmap-grid,
   .footer-grid {
     grid-template-columns: 1fr;
   }
 
+  .roadmap-card:last-child { grid-column: auto; }
+
+  .status-strip { grid-template-columns: 1fr; }
+
   .section { padding: 80px 0; }
 
   .glass-card { padding: 30px; }
+
+  .stack-card.glass-card,
+  .roadmap-card {
+    padding: 24px;
+  }
 
   .social-links {
     flex-direction: row;

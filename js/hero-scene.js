@@ -8,11 +8,15 @@ if (canvas) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: true,
+    // antialiasing does nothing useful on a full-screen shader quad (no
+    // geometric edges) yet still costs GPU time — leave it off.
+    antialias: false,
     powerPreference: "high-performance"
   });
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  // A heavy full-screen fragment shader: keep the device pixel ratio modest so
+  // we are not shading 2x+ the pixels on retina / 4K displays.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
   renderer.setClearColor(0x000000, 0);
 
   const scene = new THREE.Scene();
@@ -66,7 +70,7 @@ if (canvas) {
       float fbm(vec2 p) {
         float v = 0.0;
         float a = 0.5;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
           v += a * noise(p);
           p *= 2.02;
           a *= 0.5;
@@ -108,10 +112,12 @@ if (canvas) {
         vec2 c3 = drift(t, 0.44, 0.40, 0.34, 3.1,  vec2( 0.08,  0.28));
         vec2 c4 = drift(t, 0.35, 0.46, 0.40, 4.7,  vec2(-0.32, -0.22));
 
-        float b1 = blob(p, c1, 0.46, t, 0.0);
-        float b2 = blob(p, c2, 0.44, t, 10.0);
-        float b3 = blob(p, c3, 0.40, t, 20.0);
-        float b4 = blob(p, c4, 0.48, t, 30.0);
+        // larger, more overlapping blobs read as a soft diffuse wash
+        // rather than four distinct glows
+        float b1 = blob(p, c1, 0.58, t, 0.0);
+        float b2 = blob(p, c2, 0.56, t, 10.0);
+        float b3 = blob(p, c3, 0.52, t, 20.0);
+        float b4 = blob(p, c4, 0.60, t, 30.0);
 
         vec3 green  = vec3(0.30, 0.86, 0.62);
         vec3 cyan   = vec3(0.26, 0.74, 0.90);
@@ -119,16 +125,16 @@ if (canvas) {
         vec3 violet = vec3(0.66, 0.52, 0.96);
 
         vec3 color = vec3(0.0);
-        color += green  * b1 * 0.92;
-        color += cyan   * b2 * 0.85;
-        color += blue   * b3 * 0.80;
-        color += violet * b4 * 0.76;
+        color += green  * b1 * 0.52;
+        color += cyan   * b2 * 0.48;
+        color += blue   * b3 * 0.45;
+        color += violet * b4 * 0.42;
 
         // subtle color mixing where blobs overlap
-        color += cyan   * b1 * b2 * 0.28;
-        color += violet * b2 * b4 * 0.24;
-        color += green  * b1 * b3 * 0.20;
-        color += blue   * b3 * b4 * 0.18;
+        color += cyan   * b1 * b2 * 0.16;
+        color += violet * b2 * b4 * 0.14;
+        color += green  * b1 * b3 * 0.12;
+        color += blue   * b3 * b4 * 0.10;
 
         // diffuse ambient glow
         float ambient = fbm(p * 0.9 + t * 0.18) * 0.16;
@@ -139,10 +145,10 @@ if (canvas) {
         color += vec3(0.07, 0.09, 0.13) * mist;
 
         // apply vignette and keep it calm
-        color *= vignette * 0.8;
+        color *= vignette * 0.72;
 
-        float alpha = (b1 * 0.52 + b2 * 0.48 + b3 * 0.44 + b4 * 0.48) * vignette;
-        alpha = clamp(alpha, 0.0, 0.62);
+        float alpha = (b1 * 0.34 + b2 * 0.30 + b3 * 0.28 + b4 * 0.30) * vignette;
+        alpha = clamp(alpha, 0.0, 0.40);
 
         gl_FragColor = vec4(color, alpha);
       }
@@ -157,7 +163,13 @@ if (canvas) {
   const mouseTarget = new THREE.Vector2(0, 0);
   let scrollTarget = 0;
   let frameId = 0;
-  let running = !prefersReducedMotion;
+  let running = false;
+  let inView = true;
+
+  // Cap the loop to ~30fps. This shader is purely ambient, so a high refresh
+  // rate (60/120Hz ProMotion) just burns GPU/CPU for no visible benefit.
+  const FRAME_INTERVAL = 1000 / 30;
+  let lastFrame = 0;
 
   function resize() {
     const { clientWidth, clientHeight } = canvas;
@@ -187,22 +199,26 @@ if (canvas) {
   }
 
   function render(time = 0) {
+    if (running) {
+      frameId = requestAnimationFrame(render);
+      // Throttle to FRAME_INTERVAL without drifting the animation clock.
+      if (time - lastFrame < FRAME_INTERVAL) return;
+      lastFrame = time;
+    }
+
     uniforms.uTime.value = time * 0.001;
     uniforms.uMouse.value.lerp(mouseTarget, 0.03);
     uniforms.uScroll.value += (scrollTarget - uniforms.uScroll.value) * 0.06;
 
     renderer.render(scene, camera);
     markCanvasReady();
-
-    if (running) {
-      frameId = requestAnimationFrame(render);
-    }
   }
 
   function start() {
-    if (running) return;
+    if (running || prefersReducedMotion || !inView || document.hidden) return;
     running = true;
-    render(performance.now());
+    lastFrame = 0;
+    frameId = requestAnimationFrame(render);
   }
 
   function stop() {
@@ -213,10 +229,23 @@ if (canvas) {
   function onVisibility() {
     if (document.hidden) {
       stop();
-    } else if (!prefersReducedMotion) {
+    } else {
       start();
     }
   }
+
+  // Pause the loop entirely once the hero is scrolled out of view — the main
+  // cause of the page bogging down during navigation was this shader rendering
+  // even while off-screen.
+  const heroObserver = new IntersectionObserver((entries) => {
+    inView = entries[0].isIntersecting;
+    if (inView) {
+      start();
+    } else {
+      stop();
+    }
+  }, { threshold: 0 });
+  heroObserver.observe(canvas);
 
   window.addEventListener("resize", resize, { passive: true });
   window.addEventListener("pointermove", onPointerMove, { passive: true });
@@ -227,13 +256,15 @@ if (canvas) {
   onScroll();
 
   if (prefersReducedMotion) {
+    running = false;
     render(0);
   } else {
-    render();
+    start();
   }
 
   window.addEventListener("pagehide", () => {
     stop();
+    heroObserver.disconnect();
     window.removeEventListener("resize", resize);
     window.removeEventListener("pointermove", onPointerMove);
     window.removeEventListener("scroll", onScroll);
