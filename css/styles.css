@@ -1235,6 +1235,24 @@ body.modal-open {
 	object-position: top center;
 }
 
+/* Composite mode — the image already contains the screenshot placed inside the
+   device frame at the frame's native 448x916. Cover it edge-to-edge (no
+   safe-area inset, no rounded crop) so it aligns exactly behind the frame,
+   instead of being clipped to the screen interior like a raw screenshot. */
+.device-mockup--composite .device-mockup__screen {
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	border-radius: 0;
+	background: transparent;
+}
+
+.device-mockup--composite .device-mockup__app {
+	object-fit: contain;
+	object-position: center;
+}
+
 .device-mockup__frame {
 	position: relative;
 	z-index: 2;

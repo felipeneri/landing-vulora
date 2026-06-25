@@ -1,29 +1,18 @@
 const SHOWCASE_SLIDES = [
-	{
-		src: "assets/app-vulora.webp",
-		altKey: "showcase.slides.overview.alt",
-		captionKey: "showcase.slides.overview.caption",
-	},
-	{
-		src: "assets/app-vulora.webp",
-		altKey: "showcase.slides.insights.alt",
-		captionKey: "showcase.slides.insights.caption",
-	},
-	{
-		src: "assets/app-vulora.webp",
-		altKey: "showcase.slides.bills.alt",
-		captionKey: "showcase.slides.bills.caption",
-	},
-	{
-		src: "assets/app-vulora.webp",
-		altKey: "showcase.slides.vault.alt",
-		captionKey: "showcase.slides.vault.caption",
-	},
-	{
-		src: "assets/app-vulora.webp",
-		altKey: "showcase.slides.input.alt",
-		captionKey: "showcase.slides.input.caption",
-	},
+	{ src: "assets/screens/vulora-screen-01.webp", altKey: "showcase.slides.s01.alt", captionKey: "showcase.slides.s01.caption" },
+	{ src: "assets/screens/vulora-screen-02.webp", altKey: "showcase.slides.s02.alt", captionKey: "showcase.slides.s02.caption" },
+	{ src: "assets/screens/vulora-screen-03.webp", altKey: "showcase.slides.s03.alt", captionKey: "showcase.slides.s03.caption" },
+	{ src: "assets/screens/vulora-screen-04.webp", altKey: "showcase.slides.s04.alt", captionKey: "showcase.slides.s04.caption" },
+	{ src: "assets/screens/vulora-screen-05.webp", altKey: "showcase.slides.s05.alt", captionKey: "showcase.slides.s05.caption" },
+	{ src: "assets/screens/vulora-screen-06.webp", altKey: "showcase.slides.s06.alt", captionKey: "showcase.slides.s06.caption" },
+	{ src: "assets/screens/vulora-screen-07.webp", altKey: "showcase.slides.s07.alt", captionKey: "showcase.slides.s07.caption" },
+	{ src: "assets/screens/vulora-screen-08.webp", altKey: "showcase.slides.s08.alt", captionKey: "showcase.slides.s08.caption" },
+	{ src: "assets/screens/vulora-screen-09.webp", altKey: "showcase.slides.s09.alt", captionKey: "showcase.slides.s09.caption" },
+	{ src: "assets/screens/vulora-screen-10.webp", altKey: "showcase.slides.s10.alt", captionKey: "showcase.slides.s10.caption" },
+	{ src: "assets/screens/vulora-screen-11.webp", altKey: "showcase.slides.s11.alt", captionKey: "showcase.slides.s11.caption" },
+	{ src: "assets/screens/vulora-screen-12.webp", altKey: "showcase.slides.s12.alt", captionKey: "showcase.slides.s12.caption" },
+	{ src: "assets/screens/vulora-screen-13.webp", altKey: "showcase.slides.s13.alt", captionKey: "showcase.slides.s13.caption" },
+	{ src: "assets/screens/vulora-screen-14.webp", altKey: "showcase.slides.s14.alt", captionKey: "showcase.slides.s14.caption" },
 ];
 
 let refreshShowcaseCarousel = null;
@@ -76,8 +65,11 @@ function buildYouTubeEmbedUrl(videoId) {
 const MOCKUP_FRAME = "assets/mockup.png";
 
 function createDeviceMockup(appSrc, alt, loading = "lazy") {
+	// Showcase screens are pre-baked 448x916 composites (screenshot already
+	// placed inside the device frame). They're painted edge-to-edge behind the
+	// frame via the `.device-mockup--composite` variant, aligning exactly.
 	const mockup = document.createElement("div");
-	mockup.className = "device-mockup";
+	mockup.className = "device-mockup device-mockup--composite";
 	mockup.setAttribute("aria-label", alt);
 
 	const screen = document.createElement("div");
@@ -89,8 +81,8 @@ function createDeviceMockup(appSrc, alt, loading = "lazy") {
 	app.alt = alt;
 	app.loading = loading;
 	app.decoding = "async";
-	app.width = 1290;
-	app.height = 2796;
+	app.width = 448;
+	app.height = 916;
 
 	const frame = document.createElement("img");
 	frame.className = "device-mockup__frame";
@@ -237,31 +229,20 @@ const translations = {
 			subtitle:
 				"Vulora combines conversation, visual components and financial actions in a fluid experience. The AI interprets intent; the app executes tools and renders visual responses with control, safety and consistency.",
 			slides: {
-				overview: {
-					alt: "Vulora app home screen",
-					caption:
-						"Home experience with financial health, budget context and a conversational input.",
-				},
-				insights: {
-					alt: "Vulora insight card",
-					caption:
-						"Contextual insights rendered by the app, not as model-authored interface code.",
-				},
-				bills: {
-					alt: "Upcoming bills cards in Vulora",
-					caption:
-						"Upcoming bills, recurring services and financial context in native visual cards.",
-				},
-				vault: {
-					alt: "Vulora vault card",
-					caption:
-						"Private financial state and savings-oriented components inside the mobile UI.",
-				},
-				input: {
-					alt: "Vulora voice and chat input",
-					caption:
-						"Conversation, audio input and tool-driven actions share the same mobile surface.",
-				},
+				s01: { alt: "Vulora screen 01", caption: "Description 01 here" },
+				s02: { alt: "Vulora screen 02", caption: "Description 02 here" },
+				s03: { alt: "Vulora screen 03", caption: "Description 03 here" },
+				s04: { alt: "Vulora screen 04", caption: "Description 04 here" },
+				s05: { alt: "Vulora screen 05", caption: "Description 05 here" },
+				s06: { alt: "Vulora screen 06", caption: "Description 06 here" },
+				s07: { alt: "Vulora screen 07", caption: "Description 07 here" },
+				s08: { alt: "Vulora screen 08", caption: "Description 08 here" },
+				s09: { alt: "Vulora screen 09", caption: "Description 09 here" },
+				s10: { alt: "Vulora screen 10", caption: "Description 10 here" },
+				s11: { alt: "Vulora screen 11", caption: "Description 11 here" },
+				s12: { alt: "Vulora screen 12", caption: "Description 12 here" },
+				s13: { alt: "Vulora screen 13", caption: "Description 13 here" },
+				s14: { alt: "Vulora screen 14", caption: "Description 14 here" },
 			},
 		},
 		engineering: {
@@ -603,31 +584,20 @@ const translations = {
 			subtitle:
 				"A Vulora combina conversa, componentes visuais e ações financeiras em uma experiência fluida. A IA interpreta a intenção; o app executa tools e renderiza respostas visuais com controle, segurança e consistência.",
 			slides: {
-				overview: {
-					alt: "Tela inicial do app Vulora",
-					caption:
-						"Home com saúde financeira, contexto de orçamento e entrada conversacional.",
-				},
-				insights: {
-					alt: "Card de insight da Vulora",
-					caption:
-						"Insights contextuais renderizados pelo app, não como interface escrita pelo modelo.",
-				},
-				bills: {
-					alt: "Cards de próximas contas na Vulora",
-					caption:
-						"Próximas contas, serviços recorrentes e contexto financeiro em cards nativos.",
-				},
-				vault: {
-					alt: "Card Vulora Vault",
-					caption:
-						"Estado financeiro privado e componentes de economia dentro da UI mobile.",
-				},
-				input: {
-					alt: "Entrada de voz e chat da Vulora",
-					caption:
-						"Conversa, áudio e ações via tools compartilham a mesma superfície mobile.",
-				},
+				s01: { alt: "Tela 01 da Vulora", caption: "descrição 01 aqui" },
+				s02: { alt: "Tela 02 da Vulora", caption: "descrição 02 aqui" },
+				s03: { alt: "Tela 03 da Vulora", caption: "descrição 03 aqui" },
+				s04: { alt: "Tela 04 da Vulora", caption: "descrição 04 aqui" },
+				s05: { alt: "Tela 05 da Vulora", caption: "descrição 05 aqui" },
+				s06: { alt: "Tela 06 da Vulora", caption: "descrição 06 aqui" },
+				s07: { alt: "Tela 07 da Vulora", caption: "descrição 07 aqui" },
+				s08: { alt: "Tela 08 da Vulora", caption: "descrição 08 aqui" },
+				s09: { alt: "Tela 09 da Vulora", caption: "descrição 09 aqui" },
+				s10: { alt: "Tela 10 da Vulora", caption: "descrição 10 aqui" },
+				s11: { alt: "Tela 11 da Vulora", caption: "descrição 11 aqui" },
+				s12: { alt: "Tela 12 da Vulora", caption: "descrição 12 aqui" },
+				s13: { alt: "Tela 13 da Vulora", caption: "descrição 13 aqui" },
+				s14: { alt: "Tela 14 da Vulora", caption: "descrição 14 aqui" },
 			},
 		},
 		engineering: {
