@@ -107,11 +107,11 @@
 	--bg-elevated: #0c0e12;
 	--bg-deep: #02030a;
 
-	/* Text */
-	--text: #f5f6f8;
-	--text-secondary: #a7adb8;
-	--muted: #868c98;
-	--muted-2: #656b78;
+	/* Text — slightly lifted secondaries for premium readability (Linear/Vercel) */
+	--text: #f7f8fa;
+	--text-secondary: #b6bcc8;
+	--muted: #8a909c;
+	--muted-2: #6c7280;
 
 	/* Aurora palette — soft, never neon */
 	--green: #6df0b0;
@@ -284,9 +284,9 @@ textarea {
 	z-index: 0;
 	pointer-events: none;
 	/* Normal blending (no mix-blend-mode): blend modes force the whole viewport
-     to flatten together with the cards' backdrop-filter, which produced a
-     "ghost" blurred rectangle over the cards on hover and was expensive to
-     composite. Opacity dialed down to keep the grain subtle without the blend. */
+      to flatten together with the cards' backdrop-filter, which produced a
+      "ghost" blurred rectangle over the cards on hover and was expensive to
+      composite. Opacity dialed down to keep the grain subtle without the blend. */
 	opacity: 0.04;
 	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
@@ -714,6 +714,20 @@ textarea {
 		linear-gradient(180deg, var(--bg-deep) 0%, #04060a 55%, var(--bg) 100%);
 }
 
+/* Paper grain inside the hero — painted above the dark base gradient but
+   below the aurora canvas/mist/glow, so the aurora reads on top of the grain
+   instead of being masked by it. Matches the grain used on other sections. */
+.hero-bg::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: var(--noise-image);
+	background-repeat: repeat;
+	background-size: 240px 240px;
+	opacity: var(--noise-opacity);
+	pointer-events: none;
+}
+
 .hero-three,
 .hero-material {
 	position: absolute;
@@ -791,6 +805,45 @@ textarea {
 	will-change: transform;
 }
 
+/* Staggered hero entrance — keyframe (not transition) so it fires when the
+   pre-i18n veil lifts, after `motion-ready` is set. Each child composes in
+   semantic order: badge → headline → subtitle → CTAs. `backwards` fill keeps
+   each element at its starting opacity/transform until its delay elapses. */
+html:not(.pre-i18n) .hero-stagger {
+	animation: hero-stagger-in 900ms var(--ease-out) backwards;
+}
+html:not(.pre-i18n) .hero-stagger:nth-child(1) {
+	animation-delay: 60ms;
+}
+html:not(.pre-i18n) .hero-stagger:nth-child(2) {
+	animation-delay: 200ms;
+}
+html:not(.pre-i18n) .hero-stagger:nth-child(3) {
+	animation-delay: 340ms;
+}
+html:not(.pre-i18n) .hero-stagger:nth-child(4) {
+	animation-delay: 480ms;
+}
+
+@keyframes hero-stagger-in {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+		filter: blur(6px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+		filter: blur(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-stagger {
+		animation: none !important;
+	}
+}
+
 .badge {
 	display: inline-flex;
 	align-items: center;
@@ -832,13 +885,47 @@ textarea {
 }
 
 .eyebrow {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
 	color: var(--cyan);
 	font-size: 0.74rem;
 	font-weight: 600;
-	letter-spacing: 0.16em;
+	letter-spacing: 0.18em;
 	text-transform: uppercase;
-	margin-bottom: 18px;
+	margin-bottom: 20px;
+	background: var(--accent-gradient);
+	background-size: 160% 160%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+}
+
+/* Tracing hairlines flanking the eyebrow — Linear/Vercel-style marker */
+.eyebrow::before,
+.eyebrow::after {
+	content: "";
+	flex: 0 0 auto;
+	width: 26px;
+	height: 1px;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(91, 215, 240, 0.55) 60%,
+		rgba(176, 140, 255, 0.4)
+	);
+	opacity: 0.8;
+}
+
+.eyebrow::after {
+	background: linear-gradient(
+		90deg,
+		rgba(176, 140, 255, 0.4),
+		rgba(91, 215, 240, 0.55) 40%,
+		transparent
+	);
 }
 
 h1,
@@ -851,19 +938,19 @@ p {
 
 h1 {
 	max-width: 660px;
-	font-size: clamp(2.9rem, 6.6vw, 4.2rem);
-	line-height: 1.01;
+	font-size: clamp(2.85rem, 7vw, 4.55rem);
+	line-height: 1;
 	font-weight: 700;
-	letter-spacing: -0.038em;
+	letter-spacing: -0.042em;
 	text-wrap: balance;
 }
 
 h2 {
 	margin-top: 10px;
-	font-size: clamp(2rem, 4vw, 3.3rem);
-	line-height: 1.06;
+	font-size: clamp(2rem, 4.2vw, 3.5rem);
+	line-height: 1.05;
 	font-weight: 700;
-	letter-spacing: -0.032em;
+	letter-spacing: -0.034em;
 	text-wrap: balance;
 }
 
@@ -877,11 +964,11 @@ h3 {
 
 .hero-subtitle {
 	max-width: 540px;
-	margin-top: 24px;
+	margin-top: 26px;
 	color: var(--text-secondary);
-	font-size: clamp(1.05rem, 1.5vw, 1.22rem);
-	line-height: 1.55;
-	letter-spacing: -0.008em;
+	font-size: clamp(1.06rem, 1.5vw, 1.24rem);
+	line-height: 1.58;
+	letter-spacing: -0.009em;
 	font-weight: 400;
 	text-wrap: pretty;
 }
@@ -890,7 +977,7 @@ h3 {
 	margin-top: 22px;
 	color: var(--text-secondary);
 	font-size: 1.08rem;
-	line-height: 1.62;
+	line-height: 1.64;
 	letter-spacing: -0.008em;
 	text-wrap: pretty;
 }
@@ -911,6 +998,7 @@ h3 {
 /* Play button — circular by default, reveals its label on hover/focus */
 .button-play {
 	min-width: 44px;
+	min-height: 44px;
 	padding: 0 10px;
 	gap: 0;
 }
@@ -925,6 +1013,7 @@ h3 {
 .button-play__icon svg {
 	width: 22px;
 	height: 22px;
+	transform: translateX(1px);
 	color: #6df0b0;
 	fill: currentColor;
 	stroke: none;
@@ -1163,6 +1252,7 @@ body.modal-open {
 	padding: 148px 0;
 	position: relative;
 	isolation: isolate;
+	scroll-margin-top: 110px;
 }
 
 .product-copy {
@@ -1202,8 +1292,10 @@ body.modal-open {
 	box-shadow: 0 0 10px rgba(109, 240, 176, 0.7);
 }
 
-/* Alternate film grain for long narrative sections. */
-main > section:nth-of-type(even)::before {
+/* Alternate film grain for long narrative sections. The hero is excluded —
+   its noise is layered inside .hero-bg (below the aurora canvas) so both the
+   grain and the aurora stay visible instead of the grain masking the glow. */
+main > section:nth-of-type(odd):not(.hero)::before {
 	content: "";
 	position: absolute;
 	inset: 0;
@@ -1212,12 +1304,12 @@ main > section:nth-of-type(even)::before {
 	background-repeat: repeat;
 	background-size: 240px 240px;
 	/* Normal blending — see .site-shell::before. Avoids flattening the section
-     together with the cards' backdrop-filter (the hover "ghost" rectangle). */
+      together with the cards' backdrop-filter (the hover "ghost" rectangle). */
 	opacity: var(--noise-opacity);
 	pointer-events: none;
 }
 
-main > section:nth-of-type(even) > * {
+main > section:nth-of-type(odd):not(.hero) > * {
 	position: relative;
 	z-index: 1;
 }
@@ -1387,9 +1479,9 @@ main > section:nth-of-type(even) > * {
 .glass-card {
 	position: relative;
 	/* Own stacking context so the backdrop-filter is composited in isolation and
-     cannot flatten with the page-wide mix-blend-mode noise layers — that
-     flattening is what made the blur "ghost" across the whole section on hover
-     (and made hovering/scrolling expensive). */
+      cannot flatten with the page-wide mix-blend-mode noise layers — that
+      flattening is what made the blur "ghost" across the whole section on hover
+      (and made hovering/scrolling expensive). */
 	isolation: isolate;
 	border: var(--border-hairline);
 	border-radius: var(--radius-lg);
@@ -1397,18 +1489,32 @@ main > section:nth-of-type(even) > * {
 	-webkit-backdrop-filter: blur(34px) saturate(160%);
 	backdrop-filter: blur(34px) saturate(160%);
 	box-shadow: var(--shadow-sm), var(--shadow-inset);
-	transition:
-		transform 600ms var(--ease),
-		border-color var(--transition),
-		background var(--transition),
-		box-shadow var(--transition);
+	transition-property: transform, border-color, background, box-shadow;
+	transition-duration: 600ms;
+	transition-timing-function: var(--ease);
 	min-height: 220px;
 	padding: 34px;
 }
 
+.glass-card::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	background: radial-gradient(
+		ellipse 80% 60% at 50% 0%,
+		rgba(91, 215, 240, 0.12),
+		transparent 70%
+	);
+	opacity: 0;
+	transition: opacity 600ms var(--ease);
+	z-index: -1;
+}
+
 .glass-card:hover {
 	transform: translateY(-3px);
-	border-color: rgba(255, 255, 255, 0.11);
+	border-color: rgba(255, 255, 255, 0.12);
 	background:
 		linear-gradient(
 			150deg,
@@ -1417,7 +1523,15 @@ main > section:nth-of-type(even) > * {
 			rgba(255, 255, 255, 0.05) 100%
 		),
 		rgba(12, 14, 18, 0.62);
-	box-shadow: var(--shadow), var(--shadow-inset);
+	box-shadow:
+		0 0 0 1px rgba(91, 215, 240, 0.14),
+		0 28px 80px rgba(0, 0, 0, 0.52),
+		0 0 48px rgba(91, 215, 240, 0.08),
+		inset 0 1px 0 rgba(255, 255, 255, 0.09);
+}
+
+.glass-card:hover::after {
+	opacity: 1;
 }
 
 .glass-card p,
@@ -1451,11 +1565,16 @@ details p,
 	color: var(--text-secondary);
 	fill: currentColor;
 	stroke: none;
+	transition: filter var(--transition);
 }
 
 .glass-card:hover .card-icon {
 	border-color: rgba(255, 255, 255, 0.1);
 	background: rgba(255, 255, 255, 0.05);
+}
+
+.glass-card:hover .card-icon svg {
+	filter: drop-shadow(0 0 10px rgba(91, 215, 240, 0.35));
 }
 
 .card-icon.ask svg {
@@ -1564,6 +1683,10 @@ details p,
 	border-radius: var(--radius-xl);
 	outline: none;
 	border: var(--border-hairline);
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.04),
+		0 40px 120px rgba(0, 0, 0, 0.5),
+		inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .showcase-viewport:focus-visible {
@@ -1858,8 +1981,26 @@ details p {
 /* ----------------------------------------------------------- footer */
 
 .site-footer {
-	padding: 72px 0 48px;
-	border-top: var(--border-hairline);
+	position: relative;
+	padding: 88px 0 56px;
+}
+
+/* Gradient hairline replaces the flat top border — premium section divider */
+.site-footer::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(1160px, calc(100% - 56px));
+	height: 1px;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(91, 215, 240, 0.28) 30%,
+		rgba(176, 140, 255, 0.24) 70%,
+		transparent
+	);
 }
 
 .footer-grid {
