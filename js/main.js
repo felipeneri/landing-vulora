@@ -99,6 +99,67 @@ function createDeviceMockup(appSrc, alt, loading = "lazy") {
 	return mockup;
 }
 
+function initDeviceVideoLoading() {
+	document.querySelectorAll("[data-device-video]").forEach((video) => {
+		const screen = video.closest(".device-mockup__screen");
+		if (!screen) return;
+		let resolved = false;
+		const source = video.currentSrc || video.querySelector("source")?.src || "";
+		const cacheKey = `vulora_device_video_ready:${source}`;
+
+		const hasLoadedBefore = () => {
+			try {
+				return window.localStorage.getItem(cacheKey) === "true";
+			} catch {
+				return false;
+			}
+		};
+
+		const rememberLoaded = () => {
+			try {
+				window.localStorage.setItem(cacheKey, "true");
+			} catch {
+				// Non-essential; the visual fallback still works without storage.
+			}
+		};
+
+		const showVideo = () => {
+			resolved = true;
+			rememberLoaded();
+			screen.classList.add("is-video-ready");
+			screen.classList.remove("is-video-unavailable");
+			screen.classList.remove("is-video-loading");
+		};
+
+		const showFallback = () => {
+			if (resolved) return;
+			resolved = true;
+			screen.classList.add("is-video-unavailable");
+			screen.classList.remove("is-video-ready");
+			screen.classList.remove("is-video-loading");
+		};
+
+		const showVideoAfterHold = () => {
+			if (resolved) return;
+			resolved = true;
+			window.setTimeout(showVideo, 1000);
+		};
+
+		if (
+			hasLoadedBefore() ||
+			video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+		) {
+			showVideo();
+			return;
+		}
+
+		screen.classList.add("is-video-loading");
+		video.addEventListener("loadeddata", showVideoAfterHold, { once: true });
+		video.addEventListener("canplay", showVideoAfterHold, { once: true });
+		video.addEventListener("error", showFallback, { once: true });
+	});
+}
+
 /* ----------------------------------------------------------- translations */
 
 const translations = {
@@ -1483,6 +1544,7 @@ initParallax();
 initMagnetic();
 initCookies();
 initVideoModal();
+initDeviceVideoLoading();
 initShowcaseCarousel();
 initHeaderScrolled();
 

@@ -1235,6 +1235,19 @@ body.modal-open {
 	background: #000;
 }
 
+.device-mockup__screen--video::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	border-radius: inherit;
+	pointer-events: none;
+	box-shadow:
+		inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+		inset 0 0 18px rgba(0, 0, 0, 0.52),
+		inset 0 0 38px rgba(0, 0, 0, 0.34);
+}
+
 .device-mockup__app {
 	display: block;
 	width: 100%;
@@ -1243,6 +1256,82 @@ body.modal-open {
 	object-position: top center;
 	margin-left: -1px;
 	transform: scale(1.02);
+}
+
+.device-mockup__app[data-device-video] {
+	margin-left: 0;
+	opacity: 0;
+	object-position: center center;
+	transform: scale(1.035);
+	transform-origin: center center;
+	transition:
+		opacity 360ms var(--ease-out),
+		transform 700ms var(--ease-out);
+}
+
+.device-mockup__screen.is-video-ready .device-mockup__app[data-device-video] {
+	opacity: 1;
+	transform: scale(1.028);
+}
+
+.device-mockup__loading {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: grid;
+	place-items: center;
+	gap: 14px;
+	align-content: center;
+	background:
+		radial-gradient(
+			circle at 50% 38%,
+			rgba(109, 240, 176, 0.12),
+			transparent 28%
+		),
+		radial-gradient(
+			circle at 58% 54%,
+			rgba(91, 215, 240, 0.1),
+			transparent 32%
+		),
+		#05070b;
+	visibility: hidden;
+	opacity: 0;
+	transition:
+		opacity 320ms var(--ease-out),
+		visibility 320ms var(--ease-out);
+}
+
+.device-mockup__loading img {
+	width: 54px;
+	height: 54px;
+	filter: drop-shadow(0 12px 32px rgba(91, 215, 240, 0.22));
+}
+
+.device-mockup__spinner {
+	width: 18px;
+	height: 18px;
+	border-radius: var(--radius-full);
+	border: 2px solid rgba(255, 255, 255, 0.16);
+	border-top-color: rgba(109, 240, 176, 0.88);
+	animation: device-spinner 760ms linear infinite;
+}
+
+.device-mockup__screen.is-video-loading .device-mockup__loading,
+.device-mockup__screen.is-video-unavailable .device-mockup__loading {
+	visibility: visible;
+	opacity: 1;
+}
+
+.device-mockup__screen.is-video-unavailable .device-mockup__spinner {
+	animation: none;
+	border-color: rgba(255, 255, 255, 0.16);
+	border-top-color: rgba(109, 240, 176, 0.88);
+}
+
+@keyframes device-spinner {
+	to {
+		transform: rotate(1turn);
+	}
 }
 
 /* Composite mode — the image already contains the screenshot placed inside the
