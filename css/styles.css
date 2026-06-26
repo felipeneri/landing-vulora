@@ -2005,32 +2005,6 @@ details p,
 	line-height: 1.55;
 }
 
-/* ----------------------------------------------------------- consent (cookie banner) */
-
-.consent {
-	display: flex;
-	align-items: flex-start;
-	gap: 11px;
-	margin: 22px 0;
-}
-
-.consent input {
-	width: 18px;
-	height: 18px;
-	margin-top: 2px;
-	accent-color: var(--cyan);
-	cursor: pointer;
-}
-
-.consent span {
-	margin: 0;
-	color: var(--text-secondary);
-	font-size: 0.85rem;
-	font-weight: 400;
-	line-height: 1.5;
-	letter-spacing: -0.005em;
-}
-
 /* ----------------------------------------------------------- FAQ */
 
 .faq-list {
@@ -2195,71 +2169,6 @@ details p {
 	letter-spacing: -0.005em;
 }
 
-/* ----------------------------------------------------------- cookie banner */
-
-.cookie-banner {
-	position: fixed;
-	right: 22px;
-	bottom: 22px;
-	z-index: 80;
-	width: min(540px, calc(100% - 44px));
-	padding: 26px;
-	border: var(--border-hairline);
-	border-radius: var(--radius-lg);
-	background: var(--glass-surface-strong), var(--glass-fill-strong);
-	-webkit-backdrop-filter: blur(48px) saturate(180%);
-	backdrop-filter: blur(48px) saturate(180%);
-	box-shadow: var(--shadow-elevated), var(--shadow-inset);
-	transform: translateY(24px) scale(0.98);
-	opacity: 0;
-	pointer-events: none;
-	transition:
-		opacity 460ms var(--ease-out),
-		transform 460ms var(--ease-out);
-}
-
-.cookie-banner.visible {
-	opacity: 1;
-	pointer-events: auto;
-	transform: translateY(0) scale(1);
-}
-
-.cookie-banner h2 {
-	margin: 0 0 6px;
-	font-size: 1.06rem;
-	line-height: 1.24;
-	font-weight: 600;
-	letter-spacing: -0.015em;
-}
-
-.cookie-banner p {
-	color: var(--text-secondary);
-	font-size: 0.9rem;
-	line-height: 1.5;
-}
-
-.cookie-actions,
-.cookie-manage {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	margin-top: 18px;
-}
-
-.cookie-manage {
-	padding-top: 18px;
-	border-top: 0.5px solid var(--line);
-}
-
-.cookie-manage[hidden] {
-	display: none;
-}
-
-.cookie-manage .consent {
-	margin: 0 0 4px;
-	width: 100%;
-}
-
 /* ----------------------------------------------------------- reveal + motion */
 
 .reveal {
@@ -2276,8 +2185,7 @@ details p {
 }
 
 /* skip entrance transitions on first paint — prevents double-flash on navigation */
-html:not(.motion-ready) .reveal.visible,
-html:not(.motion-ready) .cookie-banner.visible {
+html:not(.motion-ready) .reveal.visible {
 	transition: none;
 }
 
@@ -2476,12 +2384,6 @@ html:not(.motion-ready) .cookie-banner.visible {
 		flex-wrap: wrap;
 	}
 
-	.cookie-banner {
-		right: 12px;
-		bottom: 12px;
-		width: calc(100% - 24px);
-		padding: 22px;
-	}
 }
 
 /* ----------------------------------------------------------- reduced motion */

@@ -562,17 +562,6 @@ const translations = {
 			tagline: "Private financial intelligence. Running where your data belongs.",
 			copy: "© 2026 Vulora. All rights reserved.",
 		},
-		cookies: {
-			bannerTitle: "Privacy preferences",
-			bannerText:
-				"We use only essential storage by default. Analytics and marketing stay off unless you allow them.",
-			accept: "Accept all",
-			reject: "Reject non-essential",
-			manage: "Manage",
-			essential: "Essential cookies",
-			analytics: "Analytics and marketing",
-			save: "Save preferences",
-		},
 		legal: { back: "Back to site" },
 	},
 	"pt-BR": {
@@ -972,20 +961,9 @@ const translations = {
 			tagline: "Inteligência financeira privada. Rodando onde seus dados pertencem.",
 			copy: "© 2026 Vulora. Todos os direitos reservados.",
 		},
-		cookies: {
-			bannerTitle: "Preferências de privacidade",
-			bannerText:
-				"Usamos apenas armazenamento essencial por padrão. Analytics e marketing ficam desligados até você permitir.",
-			accept: "Aceitar tudo",
-			reject: "Rejeitar não essenciais",
-			manage: "Gerenciar",
-			essential: "Cookies essenciais",
-			analytics: "Analytics e marketing",
-			save: "Salvar preferências",
-		},
 		legal: { back: "Voltar ao site" },
-	},
-};
+		},
+	};
 
 function getTranslation(path, lang = getCurrentLanguage()) {
 	return (
@@ -1254,56 +1232,6 @@ function initMagnetic() {
 	});
 }
 
-/* ----------------------------------------------------------- cookies */
-
-function enableAnalytics() {
-	console.info("Analytics enabled placeholder. Add provider code here.");
-}
-
-function initCookies() {
-	const banner = document.querySelector("[data-cookie-banner]");
-	if (!banner) return;
-
-	const saved = localStorage.getItem("vulora_cookie_preferences");
-	const managePanel = banner.querySelector("[data-cookie-manage]");
-	const analyticsToggle = banner.querySelector("[data-analytics-toggle]");
-
-	if (saved) {
-		try {
-			const prefs = JSON.parse(saved);
-			if (prefs.analytics) enableAnalytics();
-			return;
-		} catch {
-			localStorage.removeItem("vulora_cookie_preferences");
-		}
-	}
-
-	banner.classList.add("visible");
-
-	const save = (analytics) => {
-		localStorage.setItem(
-			"vulora_cookie_preferences",
-			JSON.stringify({
-				essential: true,
-				analytics: Boolean(analytics),
-				saved_at: new Date().toISOString(),
-			}),
-		);
-		if (analytics) enableAnalytics();
-		banner.classList.remove("visible");
-	};
-
-	banner.addEventListener("click", (event) => {
-		const action = event.target.closest("[data-cookie-action]")?.dataset
-			.cookieAction;
-		if (!action) return;
-		if (action === "accept") save(true);
-		if (action === "reject") save(false);
-		if (action === "manage") managePanel.hidden = !managePanel.hidden;
-		if (action === "save") save(analyticsToggle.checked);
-	});
-}
-
 /* ----------------------------------------------------------- misc */
 
 function initVideoModal() {
@@ -1542,7 +1470,6 @@ initLanguage();
 initReveal();
 initParallax();
 initMagnetic();
-initCookies();
 initVideoModal();
 initDeviceVideoLoading();
 initShowcaseCarousel();

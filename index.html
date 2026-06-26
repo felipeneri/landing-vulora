@@ -120,15 +120,15 @@
                     data-device-video
                     aria-label="Vulora app interface"
                     data-i18n-attr="aria-label:a11y.appInterface"
-                    width="1080"
-                    height="2346"
+                    width="960"
+                    height="2084"
                     autoplay
                     muted
                     playsinline
                     loop
-                    preload="auto"
+                    preload="metadata"
                   >
-                    <source src="assets/videos/hero.webm" type="video/webm">
+                    <source src="assets/videos/hero.mp4" type="video/mp4">
                   </video>
                   <div class="device-mockup__loading" data-device-video-loading aria-hidden="true">
                     <img src="assets/logo.png" alt="" width="54" height="54" decoding="async">
@@ -447,9 +447,9 @@
               <p class="contact-lead contact-lead--secondary" data-i18n="contact.text2">The project brings together Flutter architecture, local LLM inference, tool calling, offline persistence, i18n, streaming, design system, guardrails and a product vision applied to a sensitive domain: personal finance.</p>
               <p class="contact-note" data-i18n="contact.note">If you work with mobile architecture, applied AI, fintech, privacy or local inference, let's talk.</p>
               <div class="cta-row contact-actions">
-                <a class="button button-primary" href="https://www.felipeneri.com/" target="_blank" rel="noopener" data-magnetic data-i18n="contact.site">Personal site</a>
-                <a class="button button-secondary" href="https://www.linkedin.com/in/nerifelipe/" target="_blank" rel="noopener" data-magnetic data-i18n="contact.linkedin">Connect on LinkedIn</a>
-                <a class="button button-secondary" href="https://github.com/felipeneri" target="_blank" rel="noopener" data-magnetic data-i18n="contact.github">View GitHub</a>
+                <a class="button button-primary" href="https://www.felipeneri.com/" target="_blank" rel="noopener noreferrer" data-magnetic data-i18n="contact.site">Personal site</a>
+                <a class="button button-secondary" href="https://www.linkedin.com/in/nerifelipe/" target="_blank" rel="noopener noreferrer" data-magnetic data-i18n="contact.linkedin">Connect on LinkedIn</a>
+                <a class="button button-secondary" href="https://github.com/felipeneri" target="_blank" rel="noopener noreferrer" data-magnetic data-i18n="contact.github">View GitHub</a>
               </div>
             </article>
           </div>
@@ -504,13 +504,13 @@
             <p data-i18n="footer.tagline">Private financial intelligence. Running where your data belongs.</p>
           </div>
           <div class="social-links" aria-label="Social links" data-i18n-attr="aria-label:a11y.socialLinks">
-            <a href="https://x.com/FelipeNeriDev" target="_blank" rel="noopener" aria-label="X">
+            <a href="https://x.com/FelipeNeriDev" target="_blank" rel="noopener noreferrer" aria-label="X">
               <svg class="social-icon social-icon--x" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3 16 21h5L8 3Z"/><line x1="3" y1="21" x2="10.55" y2="13.45"/><line x1="13.45" y1="10.55" x2="21" y2="3"/></svg>
             </a>
-            <a href="https://www.linkedin.com/in/nerifelipe/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/nerifelipe/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3h9.004c2.483 0 4.496 2.013 4.496 4.496v9.009c0 2.482-2.013 4.495-4.496 4.495h-9.008c-2.483 0-4.496-2.013-4.496-4.496v-9.004c0-2.485 2.015-4.5 4.5-4.5Z"/><path d="M8.12 11.1v5.4"/><path d="M11.719 16.5v-3.15c0-1.243 1.007-2.25 2.25-2.25s2.25 1.007 2.25 2.25v3.15"/><circle cx="8.12" cy="8.06" r="0.6" fill="currentColor" stroke="none"/></svg>
             </a>
-            <a href="https://github.com/felipeneri" target="_blank" rel="noopener" aria-label="GitHub">
+            <a href="https://github.com/felipeneri" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.133 8.793l-2.075-.75c-.462-.167-.953.168-.966.659l-.052 1.933c-.511.63-.809 1.362-.809 2.147 0 2.237 1.612 4.049 3.643 4.191-.891 1.37-.874 2.991-.874 2.991v.716c-1.008-.411-2.922-1.368-4.227-3.115-1.072-1.435-1.773-3.354-1.773-5.38 0-2.678 1.028-4.792 2.412-6.288 1.827-1.973 4.341-2.897 6.588-2.897 2.247 0 4.761.924 6.588 2.897 1.384 1.496 2.412 3.61 2.412 6.288 0 2.027-.701 3.945-1.773 5.38-1.305 1.747-3.219 2.704-4.227 3.115v-.716s.017-1.621-.874-2.991c2.031-.142 3.643-1.954 3.643-4.191 0-.785-.299-1.517-.809-2.147l-.052-1.932c-.013-.491-.504-.826-.966-.659l-2.075.75c-.586-.147-1.213-.23-1.867-.23-.654 0-1.281.083-1.867.229Z"/></svg>
             </a>
             <a href="mailto:contact@vulora.com.br" aria-label="Email Vulora" data-i18n-attr="aria-label:a11y.email">
@@ -521,23 +521,6 @@
         <p class="copyright" data-i18n="footer.copy">© 2026 Vulora. All rights reserved.</p>
       </footer>
     </div>
-
-    <aside class="cookie-banner" data-cookie-banner aria-live="polite">
-      <div>
-        <h2 data-i18n="cookies.bannerTitle">Privacy preferences</h2>
-        <p data-i18n="cookies.bannerText">We use only essential storage by default. Analytics and marketing stay off unless you allow them.</p>
-      </div>
-      <div class="cookie-actions">
-        <button class="button button-primary" type="button" data-cookie-action="accept" data-i18n="cookies.accept">Accept all</button>
-        <button class="button button-ghost" type="button" data-cookie-action="reject" data-i18n="cookies.reject">Reject non-essential</button>
-        <button class="button button-ghost" type="button" data-cookie-action="manage" data-i18n="cookies.manage">Manage</button>
-      </div>
-      <div class="cookie-manage" data-cookie-manage hidden>
-        <label class="consent"><input type="checkbox" checked disabled><span data-i18n="cookies.essential">Essential cookies</span></label>
-        <label class="consent"><input type="checkbox" data-analytics-toggle><span data-i18n="cookies.analytics">Analytics and marketing</span></label>
-        <button class="button button-primary" type="button" data-cookie-action="save" data-i18n="cookies.save">Save preferences</button>
-      </div>
-    </aside>
 
     <div class="video-modal" data-video-modal hidden>
       <div class="video-modal__backdrop" aria-hidden="true"></div>
