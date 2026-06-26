@@ -229,20 +229,76 @@ const translations = {
 			subtitle:
 				"Vulora combines conversation, visual components and financial actions in a fluid experience. The AI interprets intent; the app executes tools and renders visual responses with control, safety and consistency.",
 			slides: {
-				s01: { alt: "Vulora screen 01", caption: "Description 01 here" },
-				s02: { alt: "Vulora screen 02", caption: "Description 02 here" },
-				s03: { alt: "Vulora screen 03", caption: "Description 03 here" },
-				s04: { alt: "Vulora screen 04", caption: "Description 04 here" },
-				s05: { alt: "Vulora screen 05", caption: "Description 05 here" },
-				s06: { alt: "Vulora screen 06", caption: "Description 06 here" },
-				s07: { alt: "Vulora screen 07", caption: "Description 07 here" },
-				s08: { alt: "Vulora screen 08", caption: "Description 08 here" },
-				s09: { alt: "Vulora screen 09", caption: "Description 09 here" },
-				s10: { alt: "Vulora screen 10", caption: "Description 10 here" },
-				s11: { alt: "Vulora screen 11", caption: "Description 11 here" },
-				s12: { alt: "Vulora screen 12", caption: "Description 12 here" },
-				s13: { alt: "Vulora screen 13", caption: "Description 13 here" },
-				s14: { alt: "Vulora screen 14", caption: "Description 14 here" },
+				s01: {
+					alt: "Vulora startup screen with model download and provider setup",
+					caption:
+						"Choose the interface language, download the local Gemma model or configure a provider before starting.",
+				},
+				s02: {
+					alt: "Vulora provider configuration sheet",
+					caption:
+						"Configure a network or cloud AI provider with SDK, base URL, API key and model selection.",
+				},
+				s03: {
+					alt: "Vulora chat registering a user and budget limit",
+					caption:
+						"Vulora learns the user's name, logs an expense and updates a monthly budget through tools.",
+				},
+				s04: {
+					alt: "Vulora monthly spending card in chat",
+					caption:
+						"Budget analysis card showing monthly spend, remaining balance and a calculated daily allowance.",
+				},
+				s05: {
+					alt: "Vulora expanded monthly spending details",
+					caption:
+						"Expanded spending view with budget progress, calendar activity and category breakdown.",
+				},
+				s06: {
+					alt: "Vulora assistant activity timeline",
+					caption:
+						"Activity timeline exposes the AI reasoning and completed tool steps behind each answer.",
+				},
+				s07: {
+					alt: "Vulora chat logging a food expense",
+					caption:
+						"Natural-language expense logging saves a lunch transaction into the matching category.",
+				},
+				s08: {
+					alt: "Vulora chat logging a transport expense",
+					caption:
+						"Vulora classifies a ride expense and records it to the local finance database.",
+				},
+				s09: {
+					alt: "Vulora batch transaction confirmation card",
+					caption:
+						"Sensitive edits and deletions wait for explicit approval before changing transaction data.",
+				},
+				s10: {
+					alt: "Vulora chat after switching language to Portuguese",
+					caption:
+						"Runtime language switching updates the interface and replies while keeping currency independent.",
+				},
+				s11: {
+					alt: "Vulora private memory disclosure confirmation",
+					caption:
+						"Private memories are shown only after the user approves a disclosure card.",
+				},
+				s12: {
+					alt: "Vulora private memory management sheet",
+					caption:
+						"On-device memory records can be reviewed, edited or forgotten from a dedicated sheet.",
+				},
+				s13: {
+					alt: "Vulora transaction backup confirmation card",
+					caption:
+						"CSV transaction export is prepared as a confirmation step before the file is created.",
+				},
+				s14: {
+					alt: "Vulora empty state financial dashboard",
+					caption:
+						"The empty state doubles as a dashboard with health status, insights, bills and savings tools.",
+				},
 			},
 		},
 		engineering: {
@@ -584,20 +640,76 @@ const translations = {
 			subtitle:
 				"A Vulora combina conversa, componentes visuais e ações financeiras em uma experiência fluida. A IA interpreta a intenção; o app executa tools e renderiza respostas visuais com controle, segurança e consistência.",
 			slides: {
-				s01: { alt: "Tela 01 da Vulora", caption: "descrição 01 aqui" },
-				s02: { alt: "Tela 02 da Vulora", caption: "descrição 02 aqui" },
-				s03: { alt: "Tela 03 da Vulora", caption: "descrição 03 aqui" },
-				s04: { alt: "Tela 04 da Vulora", caption: "descrição 04 aqui" },
-				s05: { alt: "Tela 05 da Vulora", caption: "descrição 05 aqui" },
-				s06: { alt: "Tela 06 da Vulora", caption: "descrição 06 aqui" },
-				s07: { alt: "Tela 07 da Vulora", caption: "descrição 07 aqui" },
-				s08: { alt: "Tela 08 da Vulora", caption: "descrição 08 aqui" },
-				s09: { alt: "Tela 09 da Vulora", caption: "descrição 09 aqui" },
-				s10: { alt: "Tela 10 da Vulora", caption: "descrição 10 aqui" },
-				s11: { alt: "Tela 11 da Vulora", caption: "descrição 11 aqui" },
-				s12: { alt: "Tela 12 da Vulora", caption: "descrição 12 aqui" },
-				s13: { alt: "Tela 13 da Vulora", caption: "descrição 13 aqui" },
-				s14: { alt: "Tela 14 da Vulora", caption: "descrição 14 aqui" },
+				s01: {
+					alt: "Tela inicial da Vulora com download de modelo e configuração de provedor",
+					caption:
+						"Escolha o idioma, baixe o modelo local Gemma ou configure um provedor antes de começar.",
+				},
+				s02: {
+					alt: "Tela de configuração de provedor da Vulora",
+					caption:
+						"Configure um provedor de IA com SDK, URL, chave e modelo.",
+				},
+				s03: {
+					alt: "Chat da Vulora registrando usuário e limite de orçamento",
+					caption:
+						"A Vulora aprende o nome, registra um gasto e atualiza o orçamento por tools.",
+				},
+				s04: {
+					alt: "Card de gastos mensais da Vulora no chat",
+					caption:
+						"Card de orçamento com gasto mensal, saldo restante e cálculo de limite diário disponível.",
+				},
+				s05: {
+					alt: "Detalhe expandido de gastos mensais da Vulora",
+					caption:
+						"Visão expandida com progresso do orçamento, calendário de atividade e gastos por categoria.",
+				},
+				s06: {
+					alt: "Linha do tempo de atividade da assistente Vulora",
+					caption:
+						"A linha do tempo revela o raciocínio da IA e as tools concluídas em cada resposta.",
+				},
+				s07: {
+					alt: "Chat da Vulora registrando gasto de alimentação",
+					caption:
+						"O registro em linguagem natural salva um almoço na categoria financeira correta.",
+				},
+				s08: {
+					alt: "Chat da Vulora registrando gasto de transporte",
+					caption:
+						"A Vulora classifica uma corrida de transporte e grava o gasto no banco local.",
+				},
+				s09: {
+					alt: "Card de confirmação em lote de transações da Vulora",
+					caption:
+						"Edições e exclusões sensíveis aguardam aprovação explícita antes de alterar os dados.",
+				},
+				s10: {
+					alt: "Chat da Vulora após troca de idioma para português",
+					caption:
+						"A troca de idioma em tempo real atualiza interface e respostas sem mudar a moeda automaticamente.",
+				},
+				s11: {
+					alt: "Confirmação de exibição de memórias privadas da Vulora",
+					caption:
+						"Memórias privadas só aparecem depois que o usuário aprova o card de exibição.",
+				},
+				s12: {
+					alt: "Tela de gerenciamento de memórias privadas da Vulora",
+					caption:
+						"Memórias salvas no dispositivo podem ser revisadas, editadas ou esquecidas.",
+				},
+				s13: {
+					alt: "Card de confirmação de backup de transações da Vulora",
+					caption:
+						"A exportação CSV das transações é preparada como confirmação antes de criar o arquivo.",
+				},
+				s14: {
+					alt: "Dashboard inicial financeiro da Vulora",
+					caption:
+						"O estado inicial funciona como dashboard com saúde financeira, insights, contas e reserva.",
+				},
 			},
 		},
 		engineering: {
