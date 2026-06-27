@@ -156,7 +156,21 @@ function initDeviceVideoLoading() {
 		screen.classList.add("is-video-loading");
 		video.addEventListener("loadeddata", showVideoAfterHold, { once: true });
 		video.addEventListener("canplay", showVideoAfterHold, { once: true });
+		video.addEventListener("playing", showVideoAfterHold, { once: true });
 		video.addEventListener("error", showFallback, { once: true });
+
+		// Mobile browsers keep `preload="metadata"` videos at HAVE_METADATA and
+		// won't decode the first frame (so loadeddata/canplay never fire) until
+		// playback actually begins — and muted autoplay is often deferred there.
+		// Kick off inline playback explicitly so the events fire.
+		const playAttempt = video.play();
+		if (playAttempt && typeof playAttempt.catch === "function") {
+			playAttempt.catch(() => {});
+		}
+
+		// Safety net: never leave the spinner up forever. The video element is
+		// already loading, so reveal it best-effort if nothing resolved in time.
+		window.setTimeout(showVideoAfterHold, 4000);
 	});
 }
 

@@ -2238,6 +2238,16 @@ html:not(.motion-ready) .reveal.visible {
 		grid-template-columns: 1fr;
 	}
 
+	/* Once the two-column split stacks, center the product copy so it matches
+	   every other stacked section instead of looking left-aligned by mistake. */
+	.product-section .split {
+		text-align: center;
+	}
+	.product-section .status-strip {
+		justify-content: center;
+		justify-items: center;
+	}
+
 	.phone-stage {
 		margin-top: 8px;
 	}
