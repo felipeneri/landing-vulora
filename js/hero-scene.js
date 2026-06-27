@@ -1,8 +1,30 @@
-import * as THREE from "./vendor/three.module.js";
-
+// three.js (~1.2 MB) is only needed for the ambient hero shader, which is
+// purely decorative and sits behind a CSS gradient fallback. So we never let it
+// block first paint: it's dynamically imported off the critical path, and
+// skipped entirely on coarse-pointer devices (phones/tablets) where the shader
+// is least useful and the download hurts most.
 const canvas = document.querySelector("[data-hero-three]");
+const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-if (canvas) {
+if (canvas && !isCoarsePointer) {
+  const loadHero = () => {
+    import("./vendor/three.module.js")
+      .then((THREE) => initHeroScene(THREE, canvas))
+      .catch(() => {
+        /* hero shader is non-essential; CSS fallback remains visible */
+      });
+  };
+
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(loadHero, { timeout: 2500 });
+  } else {
+    window.addEventListener("load", () => setTimeout(loadHero, 200), {
+      once: true,
+    });
+  }
+}
+
+function initHeroScene(THREE, canvas) {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const renderer = new THREE.WebGLRenderer({
